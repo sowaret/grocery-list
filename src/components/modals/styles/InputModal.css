@@ -1,0 +1,96 @@
+.InputModal .modal-container {
+	width: 350px;
+}
+
+.center.input-modal__section {
+	margin: 0 auto;
+	text-align: center;
+	width: 50%;
+}
+
+	.input-modal__label {
+		color: #AAA;
+		cursor: pointer;
+		display: block;
+		font-size: .9rem;
+		padding: 8px 0;
+	}
+	.posting.InputModal .input-modal__label {
+		cursor:  default;
+	}
+
+	.InputModal input {
+		box-sizing: border-box;
+		margin-bottom: 6px;
+		padding: 8px;
+		width: 100%;
+	}
+	.center.input-modal__section input {
+		font-size: 1.6rem;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.input-modal__error {
+		color: #C11;
+		display: grid;
+		font-size: .8rem;
+		grid-template-columns: min-content 1fr;
+		line-height: 1.2rem;
+		margin-top: 5px;
+	}
+
+		.error__icon.material-icons {
+			font-size: .8rem;
+			margin: 4px 7px 0 0;
+			vertical-align: middle;
+		}
+
+	.show-register,
+	.register.UserModal .hide-register {
+		display: none;
+	}
+	.register.UserModal .show-register {
+		display: block;
+	}
+
+	.input-modal__submit {
+		background: #FED241;
+		color: #111;
+		display: block;
+		margin: 20px auto 0;
+	}
+	.input-modal__submit:hover {
+		background:  #FED241;
+	}
+	.posting.InputModal .input-modal__submit {
+		background: #972;
+	}
+
+	.input-modal__secondary {
+		color: #AAA;
+		margin-top: 10px;
+		text-align: center;
+	}
+
+		.input-modal__secondary button:not(.settings) {
+			background: transparent;
+			margin-left: 4px;
+			padding: 0;
+			text-decoration: underline;
+		}
+		.input-modal__secondary button:hover {
+			background: inherit;
+		}
+
+		.input-modal__secondary button.settings {
+			background: transparent;
+			color: #999;
+			display: block;
+			font-size: .7rem;
+			margin: 25px auto 0;
+			padding: 4px;
+		}
+		.input-modal__secondary button.settings:hover {
+			color: #FFF;
+		}

@@ -1,0 +1,102 @@
+html, body, #root, .App {
+	height: 100%;
+}
+
+button {
+	background: #444;
+	border: 2px solid transparent;
+	box-sizing: border-box;
+	color: #FFF;
+	cursor: pointer;
+	padding: 8px 15px;
+	transition: background .15s;
+}
+button:disabled {
+	cursor: default;
+}
+button:focus {
+	border-color: #777;
+	outline: none;
+}
+button:hover {
+	background: #555;
+}
+.circle { /* button */
+	border-radius: 50%;
+	padding: 13px;
+}
+
+input,
+select {
+	background: #333;
+	border: none;
+	border-radius: 4px;
+	color: #EEE;
+	padding: 4px 6px;
+}
+input:disabled {
+	background: #282828;
+	color: #888;
+}
+input:focus {
+	outline: none;
+}
+
+
+body {
+	background: #111;
+	color: #EEE;
+	font-family: 'open sans';
+	user-select: none;
+}
+
+	.App {}
+	.App.no-scroll {
+		overflow: hidden;
+	}
+
+		.sheet-display {
+			display: grid;
+			grid-template-columns: 401px 1fr;
+			height: 100%;
+		}
+		.sheet-display.hidden {
+			display: none;
+		}
+
+			.list-elements {
+				display: grid; /* Make lists fill page height */
+				overflow: scroll hidden;
+			}
+
+				.list-header,
+				.list-main,
+				.list-footer {
+					display: grid;
+					grid-gap: 1px;
+				}
+				.list-header {
+					position: fixed;
+					z-index: 1;
+				}
+				.list-main {
+					margin-top: 44px;
+				}
+				.list-footer {
+					bottom: 70px;
+					grid-template-rows: 44px;
+					position: fixed;
+				}
+
+		.side.material-icons { /* button */
+			background: #FED241;
+			bottom: 30px;
+			color: #320;
+			font-size: 28px;
+			position: fixed;
+			right: 15px;
+		}
+
+		.changeStore-button.material-icons {
+			bottom: 105px;
+		}

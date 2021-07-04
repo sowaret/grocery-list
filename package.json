@@ -1,0 +1,38 @@
+{
+	"name": "grocery-list",
+	"version": "1.0.0",
+	"description": "Collaborative grocery list manager integrated with the Kroger API",
+	"author": "Sowaret <atomsowaret@gmail.com>",
+	"scripts": {
+		"start": "parcel index.html",
+		"build": "parcel build index.html"
+	},
+	"license": "ISC",
+	"dependencies": {
+		"@reduxjs/toolkit": "^1.5.1",
+		"animejs": "^3.2.1",
+		"array-move": "^3.0.1",
+		"axios": "^0.21.1",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-redux": "^7.2.4",
+		"react-sortable-hoc": "^1.11.0"
+	},
+	"devDependencies": {
+		"@parcel/optimizer-cssnano": "^2.0.0-nightly.605",
+		"@parcel/optimizer-htmlnano": "^2.0.0-nightly.605",
+		"@parcel/packager-css": "^2.0.0-nightly.605",
+		"@parcel/packager-html": "^2.0.0-nightly.605",
+		"@parcel/transformer-css": "^2.0.0-nightly.605",
+		"@parcel/transformer-html": "^2.0.0-nightly.605",
+		"@parcel/transformer-postcss": "^2.0.0-nightly.605",
+		"@parcel/transformer-posthtml": "^2.0.0-nightly.605",
+		"babel-preset-nano-react-app": "^0.1.0",
+		"parcel": "^2.0.0-alpha.3.2"
+	},
+	"babel": {
+		"presets": [
+			"nano-react-app"
+		]
+	}
+}

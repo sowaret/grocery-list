@@ -1,0 +1,70 @@
+.ItemResult
+{
+	box-shadow: 0 1px 2px gray;
+	cursor: pointer;
+	display: inline-grid;
+	grid-gap: 10px;
+	grid-template-rows: 14px 100px 35px;
+	margin: 10px;
+	padding: 10px;
+	position: relative;
+	width: 210px;
+}
+.ItemResult:hover
+{
+	box-shadow: 0 1px 5px gray;
+	top: -2px;
+}
+.ItemResult.noprice
+{
+	cursor: default;
+	opacity: .6;
+}
+
+	.itemResult-size
+	{
+		color: #666;
+		text-align: right;
+		font-size: 12px;
+	}
+
+	.itemResult-thumb
+	{
+		display: block;
+		margin: 0 auto;
+	}
+
+	.itemResult-name
+	{
+		display: -webkit-box;
+		font-size: 14px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	.itemResult-prices
+	{
+		font-size: 18px;
+	}
+		.itemResult-regularPrice,
+		.sale .itemResult-salePrice
+		{
+			padding: 2px 4px;
+		}
+		.itemResult-salePrice
+		{
+			background-color: #FED241;
+			color: #000;
+		}
+		.sale .itemResult-regularPrice
+		{
+			font-size: 12px;
+			text-decoration: line-through;
+		}
+
+		.itemResult-perSize
+		{
+			font-size: 14px;
+		}

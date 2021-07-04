@@ -1,0 +1,7 @@
+.show-register,
+.register.UserModal .hide-register {
+	display: none;
+}
+.register.UserModal .show-register {
+	display: block;
+}

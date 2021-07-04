@@ -1,0 +1,45 @@
+.checklist,
+.checklist__cover,
+.checklist__content {
+	font-size: 1.2rem;
+	height: 100%;
+	overflow-y: hidden;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}
+
+	.checklist__cover {
+		background: #222;
+	}
+
+	.checklist__content {
+		background: #222;
+		box-sizing: border-box;
+		left: 0;
+		margin: 0 auto;
+		max-width: 600px;
+		overflow-y: scroll;
+		padding: 20px;
+		right: 0;
+		width: 100%;
+	}
+
+		.checklist__close-button {
+			background: #111;
+			border-radius: 50%;
+			box-sizing: border-box;
+			cursor: pointer;
+			height: 41px;
+			padding-top: 8px;
+			position: fixed;
+			right: 20px;
+			transition: .4s;
+			text-align: center;
+			width: 41px;
+		}
+
+		.checklist__lists {
+			margin-top: 10px;
+		}

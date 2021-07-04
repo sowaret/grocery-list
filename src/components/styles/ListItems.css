@@ -1,0 +1,205 @@
+.list-item
+{
+	background: #222;
+	border-bottom: 1px solid #333;
+	display: grid;
+	font-size: 13px;
+	overflow: hidden;
+}
+/* Highlight list selected for the claim column display */
+.App.show-claim-column .List.claim-column-selected .list-item {
+	background: #272727;
+}
+/* List item being sorted */
+.list-item--sorting
+{
+	background: #333;
+	border-color: #444;
+	border-top: 1px solid #444;
+	margin-left: 6px;
+	z-index: 2;
+}
+/* List-specific items */
+.list-item--list
+{
+	grid-template-areas: '. sale-price quantity quantity-selector .';
+	grid-template-columns: 1fr min-content 30px min-content 1px;
+	transition: grid-template-columns .2s;
+}
+.list-item--total,
+.App.show-claim-column .List.claim-column-selected .list-item--total {
+	background: #1B221B;
+	padding: 10px;
+	text-align: right;
+}
+
+/* StoreProductList items */
+.list-item--sheet-store-product
+{
+	cursor: move;
+	cursor: grab;
+	grid-template-columns: min-content min-content 1fr 30px 60px;
+}
+.list-item--sheet-store-product:hover
+{
+	background: #333;
+}
+/* Prevent cursor and background flashing while dragging */
+.App.sorting .list-item--sheet-store-product
+{
+	cursor: default;
+}
+.App.sorting .list-item--sheet-store-product:hover
+{
+	background: inherit;
+}
+
+	.list-item__aisle,
+	.list-item__name,
+	.list-item__prices
+	{
+		padding: 7px 15px 0 6px;
+	}
+
+	.list-item__claim-indicator {
+		background: #222;
+		border-color: #333;
+		box-sizing: border-box;
+		cursor: pointer;
+		overflow: hidden;
+		transition: .4s;
+		width: 0;
+	}
+	.App.sorting .list-item__claim-indicator:not(.disabled) {
+		opacity: .4;
+	}
+	.list-item__claim-indicator.disabled div {
+		opacity: 0;
+	}
+	.App.show-claim-column .list-item__claim-indicator {
+		border-right: 1px solid #333;
+		width: 23px;
+	}
+
+		.list-item__claim-indicator div {
+			background: #1EB;
+			border: 1px solid transparent;
+			border-radius: 50%;
+			box-sizing: border-box;
+			height: 8px;
+			margin: 10px 0 0 8px;
+			transition: .1s;
+			width: 8px;
+		}
+		.list-item__claim-indicator.unclaimed div {
+			background: transparent;
+			border-color: #666;
+		}
+		.App.show-claim-column .list-item__claim-indicator div {
+			margin: 10px 7px 0;
+		}
+
+	.list-item__index
+	{
+		color: #555;
+		font-size: 13px;
+		overflow: hidden;
+		padding: 7px 0;
+		text-align: right;
+		transition: width .2s;
+		width: 0;
+	}
+	.App.sorting .list-item__index
+	{
+		width: 31px;
+	}
+	.App.sorting .list-item--sorting .list-item__index,
+	.App.sorting .list-item--sorting .list-item__prices
+	{
+		color: #AAA;
+	}
+
+	.list-item--sheet-store-product .list-item__name
+	{
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.list-item__aisle
+	{
+		background: #2E2E2E;
+		border-radius: 3px;
+		color: #AAA;
+		font-size: 11px;
+		margin: 6px 0;
+		padding: 2px 1px 1px 0;
+		text-align: center;
+	}
+	.list-item__quantity
+	{
+		grid-area: quantity;
+		padding: 7px 6px 0;
+		text-align: right;
+	}
+	.list-item__quantity-selector
+	{
+		display: grid;
+		grid-area: quantity-selector;
+		opacity: 0;
+		transition: opacity .2s, width .2s;
+		width: 0;
+	}
+	.list-item:hover .list-item__quantity-selector
+	{
+		opacity: 1;
+		width: 20px;
+	}
+
+		.list-item__quantity-button.material-icons
+		{
+			cursor: pointer;
+			font-size: 15px;
+			padding: 0 3px;
+		}
+		.list-item__quantity-button:hover
+		{
+			background: #333;
+		}
+
+	.App.sorting .list-item__prices
+	{
+		color: #555;
+	}
+	.list-item--sale .list-item__prices
+	{
+		background-color: #FED241;
+		border-radius: 3px;
+		color: #000;
+		font-size: 12px;
+		grid-area: sale-price;
+		margin: 5px 1px 6px;
+		padding: 3px 3px 2px 6px;
+	}
+
+	.list-item--sheet-store-product .list-item__prices
+	{
+		padding-right: 6px;
+		text-align: right;
+	}
+
+		.list-item__price::before
+		{
+			content: '$';
+			display: inline-block;
+			font-size: 11px;
+			margin: 1px 1px 0;
+			vertical-align: top;
+		}
+		.list-item__sale-price
+		{
+			display: none;
+		}
+		.list-item--sale .list-item__sale-price
+		{
+			display: block;
+		}

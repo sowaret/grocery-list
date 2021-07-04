@@ -1,0 +1,84 @@
+.Modal
+{
+	background: rgba(0, 0, 0, .6);
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}
+.Modal.visible
+{
+	display: block;
+}
+
+	.modal-container
+	{
+		background: #222;
+		border-radius: 4px;
+		display: grid;
+		grid-template-rows: 60px 1fr;
+		left: 50%;
+		min-height: 380px;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 500px;
+	}
+
+		.modal-header
+		{
+			font-size: 24px;
+			margin: 0;
+			padding: 15px 20px;
+		}
+
+			.modal-header-icon
+			{
+				font-size: 30px;
+				margin-right: 13px;
+				vertical-align: middle;
+			}
+			.modal-header-text
+			{
+				vertical-align: middle;
+			}
+
+		.modal-body
+		{
+			padding: 0 20px 20px;
+		}
+
+.SearchModal {}
+
+	.SearchModal .modal-body
+	{
+		display: grid;
+		grid-gap: 10px;
+		grid-template-rows: 30px 1fr;
+		overflow: hidden;
+	}
+
+		.searchModal-results
+		{
+			overflow-y: scroll;
+			padding-right: 10px;
+		}
+
+.AddItemModal {}
+
+	.AddItemModal .modal-container
+	{
+		height: 90%;
+		width: 90%;
+	}
+
+		/* .modal-body */
+
+			.AddItemModal .searchModal-results
+			{
+				background: #FFF;
+				color: #000;
+			}

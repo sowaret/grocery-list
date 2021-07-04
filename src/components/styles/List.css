@@ -1,0 +1,138 @@
+.BaseList
+{
+	background: #222;
+	border-right: 1px solid #181818;
+	padding-bottom: 160px; /* Accommodate scroll for buttons so they don't cover items */
+	width: 110px;
+}
+
+.List
+{
+	transition: opacity .2s;
+}
+.App.sorting .List
+{
+	opacity: .6;
+}
+
+	.list-name {
+		background: #222;
+		border-bottom: 2px solid #333;
+		cursor: pointer;
+		font-size: 14px;
+		padding: 7px;
+	}
+	.list-name.editing
+	{
+		cursor: default;
+	}
+
+		.edit-name-input {
+			box-sizing: border-box;
+			display: none;
+			padding: 6px;
+			width: 100%;
+		}
+		.list-name.editing .edit-name-input
+		{
+			display: inline;
+		}
+
+		.name-editable {
+			overflow: hidden;
+			padding: 6px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.list-name.editing .name-editable
+		{
+			display: none;
+		}
+
+			.list-name-edit.material-icons
+			{
+				font-size: 16px;
+				opacity: 0;
+				padding: 13px 8px;
+				position: absolute;
+				right: 0;
+				top: 0;
+				transition: opacity .2s;
+			}
+			.list-name:hover .list-name-edit
+			{
+				opacity: 1;
+			}
+
+.list__container {
+	background: #222;
+}
+
+	.list-items {
+		display: grid;
+	}
+	.SheetStoreProductsList .list-items {
+		margin-top: 44px;
+	}
+
+	.list-buttons-container {
+		display: grid;
+		grid-row-gap: 9px;
+		grid-template-columns: 1fr 1fr;
+	}
+		.list__button.material-icons
+		{
+			background: #222;
+			border: 2px solid #555;
+			box-sizing: border-box;
+			cursor: pointer;
+			font-size: 1.25rem;
+			height: 38px;
+			margin: 0 auto;
+			opacity: 0;
+			padding: 7px 0;
+			text-align: center;
+			transition: opacity .2s;
+			width: 38px;
+		}
+		.list__button:nth-child(3) {
+			grid-column: span 2;
+		}
+		.list-buttons-container.show .list__button,
+		.list-buttons-container:hover .list__button {
+			opacity: 1;
+		}
+
+.SheetStoreProductsList {
+	transition: margin .35s;
+	width: 400px;
+	z-index: 2;
+}
+.App.sorting .SheetStoreProductsList {
+	margin: 0 6px;
+}
+
+	.store-header {
+		background: inherit;
+		border-bottom: 2px solid #333;
+		display: grid;
+		grid-template-columns: 32px 32px 1fr;
+		padding: 1px 0;
+		position: fixed;
+		width: 400px;
+		z-index: 1; /* Prevent claim indicators from bleeding through during their transition animation */
+	}
+
+		.header__menu-button.material-icons {
+			background: none;
+			color: #CCC;
+			font-size: 1.25rem;
+			padding: 0;
+		}
+		.header__menu-button:hover {
+			background: #333;
+		}
+
+		.header__store-name {
+			padding: 11px 6px;
+		}

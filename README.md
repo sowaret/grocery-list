@@ -4,6 +4,7 @@ The goal of this project is to create a tool for family or other household membe
 
 Users can claim items to be picked up during a trip and keep each other updated on their progress using a shared, real-time checklist.
 
+
 ## Features
 
 - 📃 Collaborative UI to build lists and sort items to optimize trip routes
@@ -14,3 +15,8 @@ Users can claim items to be picked up during a trip and keep each other updated 
 	- 🏷️ Keep track of sale prices between lists
 
 - ✔️ Shared checklist to keep other members updated on their trip progress and provide easy access to product information, such as price and aisle number
+
+
+## [Feature Showcase Video](https://youtu.be/ambv2UjHDi0)
+
+[![Preview of feature showcase video](https://i3.ytimg.com/vi/ambv2UjHDi0/maxresdefault.jpg)](https://youtu.be/ambv2UjHDi0)

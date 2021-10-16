@@ -9,30 +9,31 @@ const ListName = ({ listId, name }) => {
 
 	const dispatch = useDispatch();
 
-	const classes = [
-		'list-name',
-		...isEditingName ? ['editing'] : '',
-	].join(' ');
+	const classes = ['list-name', ...(isEditingName ? ['editing'] : '')].join(
+		' '
+	);
 
 	const nameInputRef = useRef();
 
 	// Methods
-	const saveNameEdit = _ => {
+	const saveNameEdit = () => {
 		setIsEditingName(false);
 		if (nameInputRef.current.value !== name)
 			setNewName(nameInputRef.current.value);
 	};
-	const cancelNameEdit = _ => {
+	const cancelNameEdit = () => {
 		nameInputRef.current.value = name; // Reset name input
 		setIsEditingName(false);
 	};
 
 	// Event handlers
-	const handleNameClick = _ => {
+	const handleNameClick = () => {
 		if (isEditingName) return;
 		setIsEditingName(true);
-		setTimeout(_ => { nameInputRef.current.value = name; });
-		setTimeout(_ => nameInputRef.current.select());
+		setTimeout(() => {
+			nameInputRef.current.value = name;
+		});
+		setTimeout(() => nameInputRef.current.select());
 	};
 	const handleNameInputKeyDown = e => {
 		if (e.key === 'Escape') return cancelNameEdit();
@@ -40,10 +41,12 @@ const ListName = ({ listId, name }) => {
 	};
 
 	// On mount
-	useEffect(_ => { setDidMount(true); }, []);
+	useEffect(() => {
+		setDidMount(true);
+	}, []);
 
 	// Rename list
-	useEffect(_ => {
+	useEffect(() => {
 		if (didMount) dispatch(wsRenameList({ listId, newName }));
 	}, [newName]);
 

@@ -11,15 +11,13 @@ const Sheet = ({ appRoot }) => {
 	const { checklistListId, id, lists } = useSelector(state => state.sheet);
 	const listIds = Object.keys(lists);
 	const listCount = listIds.length;
-	const classes = [
-		'sheet-display',
-		...id ? '' : ['hidden'],
-	].join(' ');
+	const classes = ['sheet-display', ...(id ? '' : ['hidden'])].join(' ');
 
 	const listElements = listIds.map((id, i) => <List id={id} key={i} />);
 
-	const checklistDisplay = checklistListId
-		&& <Checklist listId={checklistListId} />;
+	const checklistDisplay = checklistListId && (
+		<Checklist listId={checklistListId} />
+	);
 
 	// List header translation
 	const [listHeaderTranslateX, setListHeaderTranslateX] = useState(0);
@@ -34,7 +32,7 @@ const Sheet = ({ appRoot }) => {
 	const listElementsRef = useRef();
 	const dispatch = useDispatch();
 
-	const promptCreateList = _ => {
+	const promptCreateList = () => {
 		const name = prompt('New list name:', formatCurrentDate());
 		// Abort if user cancelled prompt
 		if (name === null) return;
@@ -42,20 +40,21 @@ const Sheet = ({ appRoot }) => {
 		dispatch(wsCreateList(name));
 	};
 
-	const updateListHeaderTranslateX = _ =>
+	const updateListHeaderTranslateX = () =>
 		setListHeaderTranslateX(listElementsRef.current.scrollLeft);
 
 	// On mount, bind scroll event listener
-	useEffect(_ => {
+	useEffect(() => {
 		listElementsRef.current.addEventListener(
 			'scroll',
 			updateListHeaderTranslateX
 		);
 
-		return cleanup = _ => listElementsRef.current.removeEventListener(
-			'scroll',
-			updateListHeaderTranslateX
-		);
+		return (cleanup = () =>
+			listElementsRef.current.removeEventListener(
+				'scroll',
+				updateListHeaderTranslateX
+			));
 	}, []);
 
 	return (
@@ -71,7 +70,7 @@ const Sheet = ({ appRoot }) => {
 			{checklistDisplay}
 			<button
 				className="side changeStore-button circle material-icons"
-				onClick={_ => dispatch(setCurrentView('store-search'))}
+				onClick={() => dispatch(setCurrentView('store-search'))}
 				title="Find a store"
 			>
 				store

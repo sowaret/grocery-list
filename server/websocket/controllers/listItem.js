@@ -39,9 +39,7 @@ module.exports = {
 	UPDATE_ITEM_CLAIMED_BY: {
 		try: async ({ client, data }) => {
 			const { itemId, listId, userId } = data;
-			const claimedByUserDocument = userId
-				? client.user.document
-				: undefined;
+			const claimedByUserDocument = userId ? client.user.document : undefined;
 
 			const updateData = await client.sheet.updateItemClaimedBy({
 				itemId,

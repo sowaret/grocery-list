@@ -6,15 +6,12 @@ const StoreResult = ({ data, onClick }) => {
 	const { name, address, city, state, zipCode } = store;
 
 	return (
-		<div
-			className = "StoreResult"
-			onClick = {_ => onClick(store)}
-			>
-
+		<div className="StoreResult" onClick={() => onClick(store)}>
 			<div className="storeResult-name">{name}</div>
 			<div className="storeResult-address">{address}</div>
-			<div className="storeResult-city">{city}, {state} {zipCode}</div>
-
+			<div className="storeResult-city">
+				{city}, {state} {zipCode}
+			</div>
 		</div>
 	);
 };

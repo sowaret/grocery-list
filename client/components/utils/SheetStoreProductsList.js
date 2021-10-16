@@ -8,9 +8,11 @@ export default updateStoreProductListSort = data => {
 	// Do nothing if item was not moved
 	if (oldIndex === newIndex) return;
 
-	dispatch(wsReorderStoreProducts({
-		newIndex,
-		oldIndex,
-		storeProductId: Object.keys(storeProducts)[oldIndex],
-	}));
+	dispatch(
+		wsReorderStoreProducts({
+			newIndex,
+			oldIndex,
+			storeProductId: Object.keys(storeProducts)[oldIndex],
+		})
+	);
 };

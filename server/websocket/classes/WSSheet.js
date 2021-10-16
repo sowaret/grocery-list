@@ -24,7 +24,7 @@ const formatUser = (wsSheet, user, rest = {}) => {
 		customColour,
 		id,
 		username,
-		...isOwner && { isOwner },
+		...(isOwner && { isOwner }),
 		...rest,
 	};
 };
@@ -54,14 +54,12 @@ class WSSheet {
 	}
 
 	getUserList() {
-		const connectedClientIds = Object.values(this.wsUsers).map(
-			user => user.id
-		);
+		const connectedClientIds = Object.values(this.wsUsers).map(user => user.id);
 		const users = {};
 		this.users.map(user => {
 			const isConnected = connectedClientIds.includes(user.id);
 			users[user.id] = formatUser(this, user, {
-				...!isConnected && { isDisconnected: true },
+				...(!isConnected && { isDisconnected: true }),
 			});
 		});
 		return users;
@@ -78,10 +76,11 @@ class WSSheet {
 
 	// Helper methods
 	async enrichWithSheetDetails() {
-		const { data, sheet } = await getSheetById(
-			this.id,
-			['store', 'store_products', 'users']
-		);
+		const { data, sheet } = await getSheetById(this.id, [
+			'store',
+			'store_products',
+			'users',
+		]);
 
 		this.document = sheet;
 		this.ownerId = sheet.owner._id.toString();
@@ -150,10 +149,11 @@ class WSSheet {
 	}
 
 	async updateItemClaimedBy({ itemId, listId, claimedByUserDocument }) {
-		const updateData =
-			await updateListItemClaimedBy(itemId, claimedByUserDocument);
-		if (updateData)
-			this.lists[listId].items[itemId].claimedBy = updateData.id;
+		const updateData = await updateListItemClaimedBy(
+			itemId,
+			claimedByUserDocument
+		);
+		if (updateData) this.lists[listId].items[itemId].claimedBy = updateData.id;
 		return updateData;
 	}
 
@@ -169,11 +169,9 @@ class WSSheet {
 			newIndex,
 			storeProductId
 		);
-		this.storeProducts = Object.fromEntries(arrayMove(
-			Object.entries(this.storeProducts),
-			oldIndex,
-			newIndex
-		));
+		this.storeProducts = Object.fromEntries(
+			arrayMove(Object.entries(this.storeProducts), oldIndex, newIndex)
+		);
 	}
 }
 

@@ -7,10 +7,11 @@ const anim = {
 	slideOut: { translateX: [0, '-100%'] },
 };
 const [duration, easing] = [350, 'easeOutExpo'];
-export const animeTarget = (target, animName, properties) => anime({
-	targets: target.current,
-	duration,
-	easing,
-	...anim[animName],
-	...properties,
-});
+export const animeTarget = (target, animName, properties) =>
+	anime({
+		targets: target.current,
+		duration,
+		easing,
+		...anim[animName],
+		...properties,
+	});

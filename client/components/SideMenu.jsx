@@ -4,7 +4,7 @@ import { setCurrentView } from '../features/appSlice';
 import { animeTarget, getMenuDisplay, joinClasses } from './utils/SideMenu';
 import './styles/SideMenu';
 
-const SideMenu = _ => {
+const SideMenu = () => {
 	const [isAnimating, setIsAnimating] = useState(false);
 	const { currentView } = useSelector(state => state.app);
 	const { code: sheetCode, users } = useSelector(state => state.sheet);
@@ -22,47 +22,42 @@ const SideMenu = _ => {
 		setIsAnimating(true);
 		animeTarget(coverRef, coverAnim);
 		animeTarget(menuRef, menuAnim, {
-			complete: _ => {
+			complete: () => {
 				setIsAnimating(false);
 				if (typeof complete === 'function') complete();
 			},
 		});
 	};
 
-	const closeMenu = (resetCurrentView = true) => animate({
-		...resetCurrentView && { complete: _ => dispatch(setCurrentView()) },
-		coverAnim: 'fadeOut',
-		menuAnim: 'slideOut',
-	});
+	const closeMenu = (resetCurrentView = true) =>
+		animate({
+			...(resetCurrentView && { complete: () => dispatch(setCurrentView()) }),
+			coverAnim: 'fadeOut',
+			menuAnim: 'slideOut',
+		});
 
 	const closeMenuAndDispatch = reducer => {
 		closeMenu(false);
 		dispatch(reducer);
 	};
 
-	const openMenu = _ => animate({ coverAnim: 'fadeIn', menuAnim: 'slideIn' });
+	const openMenu = () => animate({ coverAnim: 'fadeIn', menuAnim: 'slideIn' });
 
 	const menuDisplay = getMenuDisplay({
 		functions: { closeMenuAndDispatch, setCurrentView },
 		params: { sheetCode, users, username },
 	});
 
-	useEffect(_ => {
+	useEffect(() => {
 		if (isOpen) openMenu();
-	}, [currentView])
+	}, [currentView]);
 
 	return (
 		<div className={classes}>
-			<div
-				className="side-menu__cover"
-				onClick={closeMenu}
-				ref={coverRef}
-			/>
+			<div className="side-menu__cover" onClick={closeMenu} ref={coverRef} />
 			<div className="side-menu__menu" ref={menuRef}>
 				<h1>
-					<span className="menu__header-icon material-icons">
-						fastfood
-					</span>
+					<span className="menu__header-icon material-icons">fastfood</span>
 					Grocery List
 				</h1>
 				{menuDisplay}

@@ -10,17 +10,22 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.then(_ => {
+	.then(() => {
 		const app = express()
-			.use( cors() )
-			.use( express.json() )
+			.use(cors())
+			.use(express.json())
 			.use('/api/v1', routes);
 
-		app.listen(API_PORT, _ => console.log(`\nConnection successful, listening on port ${API_PORT}.`));
+		app.listen(API_PORT, () =>
+			console.log(`\nConnection successful, listening on port ${API_PORT}.`)
+		);
 	})
 	.catch(err => console.log('Could not connect to database:', err.toString()));
 
 // Handle errors after initial connection
-mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+mongoose.connection.on(
+	'error',
+	console.error.bind(console, 'MongoDB connection error:')
+);
 
 createWebSocketServer(8080);

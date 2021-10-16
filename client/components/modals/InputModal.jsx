@@ -11,7 +11,7 @@ const InputModal = ({
 	classes,
 	disableCloseOnFadeClick = true,
 	isVisible,
-	additionalValidation = _ => [],
+	additionalValidation = () => [],
 	buttonLabel,
 	inputErrorState,
 	isPOSTing,
@@ -32,7 +32,7 @@ const InputModal = ({
 	const className = [
 		'InputModal',
 		...classes,
-		...isPOSTing ? ['posting'] : '',
+		...(isPOSTing ? ['posting'] : ''),
 	].join(' ');
 	// Filter out `get` from field refs
 	const formFields = Object.fromEntries(
@@ -41,20 +41,20 @@ const InputModal = ({
 	const inputDisplay = Object.entries(formFields).map(([key, field]) => {
 		const { label, maxLength, onChange, ref, sectionClass, type } = field;
 		const id = `${classes[0]}__${key}`;
-		const sectionClasses = [
-			'input-modal__section',
-			sectionClass,
-		].join(' ');
-		const input = React.createElement(
-			'input',
-			{ id, disabled: isPOSTing, maxLength, onChange, ref, type }
-		);
+		const sectionClasses = ['input-modal__section', sectionClass].join(' ');
+		const input = React.createElement('input', {
+			id,
+			disabled: isPOSTing,
+			maxLength,
+			onChange,
+			ref,
+			type,
+		});
 		return (
 			<div className={sectionClasses} key={key}>
-				<label
-					className="input-modal__label"
-					htmlFor={id}
-				>{field.label}:</label>
+				<label className="input-modal__label" htmlFor={id}>
+					{field.label}:
+				</label>
 				{input}
 			</div>
 		);
@@ -80,20 +80,19 @@ const InputModal = ({
 
 		dispatch(setCurrentPOST(reduxPOST));
 		const data = {};
-		for (const key of Object.keys(formFields))
-			data[key] = fields.get(key);
+		for (const key of Object.keys(formFields)) data[key] = fields.get(key);
 
 		dispatch(webSocketSuccessReducer(data));
 	};
 
-	const validateInputs = _ => {
+	const validateInputs = () => {
 		dispatch(responseErrorReducer());
 		const errors = [];
 		for (const key of Object.keys(formFields)) {
 			// Check for empty values
 			if (
-				fields.get(key) === ''
-				&& additionalValidation[key]?.allowEmpty !== true
+				fields.get(key) === '' &&
+				additionalValidation[key]?.allowEmpty !== true
 			) {
 				const { label } = fields[key];
 				errors.push(`${label || capitalize(key)} cannot be empty.`);
@@ -110,27 +109,28 @@ const InputModal = ({
 		return true;
 	};
 
-	useEffect(_ => {
-		if (responseErr.length) setTimeout(_ =>
-			fields[responseErrorFocusField].ref.current.focus()
-		);
+	useEffect(() => {
+		if (responseErr.length)
+			setTimeout(() => fields[responseErrorFocusField].ref.current.focus());
 	}, [responseErr]);
 
-	return React.createElement(Modal, {
-		iconName,
-		title,
-		className,
-		disableCloseOnFadeClick,
-		onOpen: focusNextInput,
-		isVisible,
-	}, (
+	return React.createElement(
+		Modal,
+		{
+			iconName,
+			title,
+			className,
+			disableCloseOnFadeClick,
+			onOpen: focusNextInput,
+			isVisible,
+		},
 		<form onSubmit={submitForm}>
 			{inputDisplay}
 			{errorDisplay}
 			{submitButton}
 			{children}
 		</form>
-	));
+	);
 };
 
 export default InputModal;

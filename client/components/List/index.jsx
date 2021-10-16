@@ -10,11 +10,9 @@ const List = ({ id }) => {
 	// Redux
 	const list = useSelector(state => state.sheet.lists[id]);
 	const { items, name } = list;
-	const {
-		claimColumnListId,
-		newItemListId,
-		storeProducts,
-	} = useSelector(state => state.sheet);
+	const { claimColumnListId, newItemListId, storeProducts } = useSelector(
+		state => state.sheet
+	);
 	// State
 	const [isHover, setIsHover] = useState(false);
 	const [storeProductIdList, setStoreProductIdList] = useState([]);
@@ -22,13 +20,13 @@ const List = ({ id }) => {
 
 	const classes = [
 		'List',
-		...claimColumnListId === id ? ['claim-column-selected'] : '',
+		...(claimColumnListId === id ? ['claim-column-selected'] : ''),
 	].join(' ');
 
 	const baseElementRef = useRef();
 
-	const handleMouseEnter = _ => setIsHover(true);
-	const handleMouseLeave = _ => setIsHover(false);
+	const handleMouseEnter = () => setIsHover(true);
+	const handleMouseLeave = () => setIsHover(false);
 
 	const listNameHeaderPortal = ReactDOM.createPortal(
 		<ListName listId={id} name={name} />,
@@ -36,36 +34,33 @@ const List = ({ id }) => {
 	);
 
 	const listButtonsPortal = ReactDOM.createPortal(
-		React.createElement(
-			ListButtons,
-			{
-				claimColumnListId,
-				isHover,
-				listId: id,
-				newItemListId,
-			}
-		),
+		React.createElement(ListButtons, {
+			claimColumnListId,
+			isHover,
+			listId: id,
+			newItemListId,
+		}),
 		document.querySelector('.list-footer')
 	);
 
 	// On mount
-	useEffect(_ => {
+	useEffect(() => {
 		const baseElement = baseElementRef.current;
 		baseElement.addEventListener('mouseenter', handleMouseEnter);
 		baseElement.addEventListener('mouseleave', handleMouseLeave);
 
-		return cleanup = _ => {
+		return (cleanup = () => {
 			baseElement.removeEventListener('mouseenter', handleMouseEnter);
 			baseElement.removeEventListener('mouseleave', handleMouseLeave);
-		};
+		});
 	}, []);
 
 	// Update total when items change
-	useEffect(_ => {
+	useEffect(() => {
 		setTotal(getTotalCost({ list, storeProducts }));
 	}, [items]);
 
-	useEffect(_ => {
+	useEffect(() => {
 		setStoreProductIdList(Object.keys(storeProducts));
 	}, [storeProducts]);
 
@@ -73,9 +68,12 @@ const List = ({ id }) => {
 		<div className="list__container" ref={baseElementRef}>
 			<BaseList
 				className={classes}
-				itemsDisplay={
-					getListItemsDisplay({ id, items, storeProductIdList, total })
-				}
+				itemsDisplay={getListItemsDisplay({
+					id,
+					items,
+					storeProductIdList,
+					total,
+				})}
 			>
 				{listNameHeaderPortal}
 				{listButtonsPortal}

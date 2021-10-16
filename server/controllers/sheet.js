@@ -66,8 +66,10 @@ const changeSheetPassword = async params => {
 };
 
 const changeSheetStore = async ({ sheetId, storeDetails }) => {
-	const { sheet, store } =
-		await validateChangeStoreRequirements({ sheetId, storeDetails, });
+	const { sheet, store } = await validateChangeStoreRequirements({
+		sheetId,
+		storeDetails,
+	});
 	sheet.store = store;
 	await sheet.save().catch(err => {
 		throw 'CHANGE_STORE';
@@ -95,21 +97,20 @@ const createSheet = async ({ owner }) => {
 	}
 };
 
-const getSheetByCode = (code, populateFields = []) => getSheetByField(
-	{ code: code.toUpperCase() },
-	populateFields,
-	'getSheetByCode'
-);
+const getSheetByCode = (code, populateFields = []) =>
+	getSheetByField(
+		{ code: code.toUpperCase() },
+		populateFields,
+		'getSheetByCode'
+	);
 
 const getSheetByField = async (filter, populateFields = [], method) => {
 	// Convert any `populateFields` string to array
 	if (typeof populateFields === 'string') populateFields = [populateFields];
 	try {
 		// Validate parameters
-		if (
-			typeof filter !== 'object'
-			|| !Array.isArray(populateFields)
-		) throw 'INVALID_PARAMETER_IN_CONTROLLER';
+		if (typeof filter !== 'object' || !Array.isArray(populateFields))
+			throw 'INVALID_PARAMETER_IN_CONTROLLER';
 
 		return await populateSheetDetails(filter, populateFields);
 	} catch (error) {
@@ -137,9 +138,8 @@ const updateSheetStoreProductSort = async (
 	storeProductId
 ) => {
 	try {
-		const sheet = sheetId instanceof Sheet
-			? sheetId
-			: ( await getSheetById(sheetId) ).sheet;
+		const sheet =
+			sheetId instanceof Sheet ? sheetId : (await getSheetById(sheetId)).sheet;
 		const storeProducts = [...sheet.store_products];
 
 		// Ensure we are trying to move the correct item
@@ -149,8 +149,8 @@ const updateSheetStoreProductSort = async (
 		sheet.store_products = arrayMove(storeProducts, oldIndex, newIndex);
 		await sheet.save().catch(err => {
 			throw 'UPDATE_SHEET_STORE_PRODUCT_SORT';
-		})
-	} catch(error) {
+		});
+	} catch (error) {
 		throw { method: 'updateSheetStoreProductSort', error };
 	}
 }; // updateSheetStoreProductSort

@@ -15,10 +15,10 @@ const axiosInstance = axios.create({
 const tokenEndpointConfig = {
 	method: 'post',
 	url: 'https://api.kroger.com/v1/connect/oauth2/token',
-	headers: { 
-		Accept: 'application/json', 
-		Authorization: process.env.AUTH_STRING, 
-		'Content-Type': 'application/x-www-form-urlencoded', 
+	headers: {
+		Accept: 'application/json',
+		Authorization: process.env.AUTH_STRING,
+		'Content-Type': 'application/x-www-form-urlencoded',
 	},
 	data: qs.stringify({
 		grant_type: 'client_credentials',
@@ -26,13 +26,12 @@ const tokenEndpointConfig = {
 	}),
 };
 
-const updateBearerToken = async _ => {
+const updateBearerToken = async () => {
 	try {
 		const response = await axios(tokenEndpointConfig);
 		const { access_token, expires_in } = response.data;
 
-		axiosInstance.defaults.headers['Authorization'] =
-			`Bearer ${access_token}`;
+		axiosInstance.defaults.headers['Authorization'] = `Bearer ${access_token}`;
 		updateEnvFile({
 			TOKEN: access_token,
 			TOKEN_EXPIRES_AT: unixTimestamp() + expires_in,
@@ -48,10 +47,7 @@ const API = {
 			await updateBearerToken();
 		}
 		try {
-			const res = await axiosInstance.get(
-				`${baseUrl}${route}`,
-				{ params }
-			);
+			const res = await axiosInstance.get(`${baseUrl}${route}`, { params });
 			callbacks.success(res.data);
 		} catch (err) {
 			callbacks.fail(err);

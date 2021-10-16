@@ -17,27 +17,30 @@ const addStoreProductToSheet = async (storeProduct, list, listItemResponse) => {
 
 const getOrCreateStoreProduct = async (store, product, details = {}) => {
 	if (
-		!(store instanceof Store)
-		|| !(product instanceof Product)
-		|| typeof details !== 'object'
+		!(store instanceof Store) ||
+		!(product instanceof Product) ||
+		typeof details !== 'object'
 	)
 		throw 'INVALID_PARAMETER_IN_CONTROLLER';
 
-	const storeProduct = await StoreProduct.findOne({ store, product })
-		.catch(err => {
+	const storeProduct = await StoreProduct.findOne({ store, product }).catch(
+		err => {
 			throw 'FIND_STORE_PRODUCT';
-		});
+		}
+	);
 	if (storeProduct) return { storeProduct };
 
 	const newStoreProduct = await new StoreProduct({
 		store,
 		product,
 		...details,
-	}).save().catch(err => {
-		throw 'CREATE_STORE_PRODUCT';
-	});
+	})
+		.save()
+		.catch(err => {
+			throw 'CREATE_STORE_PRODUCT';
+		});
 
-	return { storeProduct: newStoreProduct, new: true }
+	return { storeProduct: newStoreProduct, new: true };
 }; // getOrCreateStoreProduct
 
 module.exports = { addStoreProductToSheet, getOrCreateStoreProduct };

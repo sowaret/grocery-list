@@ -7,22 +7,16 @@ export default {
 	setJoinError: (state, action) => {
 		state.joinError = ensureArray(action.payload);
 	},
-	setSheet: (state, action) => { // e.g. WS POPULATE_SHEET
-		const {
-			code,
-			lists,
-			password,
-			sheetId,
-			store,
-			storeProducts,
-			users,
-		} = action.payload;
+	setSheet: (state, action) => {
+		// e.g. WS POPULATE_SHEET
+		const { code, lists, password, sheetId, store, storeProducts, users } =
+			action.payload;
 		return {
 			...state,
 			code,
 			id: sheetId,
 			lists: lists || {},
-			...password && { password },
+			...(password && { password }),
 			store: store || STORE_DEFAULT,
 			storeProducts,
 			users,

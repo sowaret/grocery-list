@@ -6,38 +6,34 @@ import { wsUpdateItemClaimedBy } from '../webSocketModule';
 
 export const claimIndicatorClass = 'list-item__claim-indicator';
 export const isTargetClaimIndicator = target =>
-	target.classList.contains(claimIndicatorClass)
-	|| target.parentElement.classList.contains(claimIndicatorClass);
+	target.classList.contains(claimIndicatorClass) ||
+	target.parentElement.classList.contains(claimIndicatorClass);
 
 const SheetStoreProductsListItem = ({ data, id, index }) => {
-	const {
-		claimColumnListId: listId,
-		lists,
-		storeProducts,
-	} = useSelector(state => state.sheet);
+	const { claimColumnListId: listId } = useSelector(state => state.sheet);
 	const { _id: userId } = useSelector(state => state.user);
 	const { aisle, claimedBy, name, itemId, price, userColour } = data;
 	const dispatch = useDispatch();
 
 	const claimButtonClasses = [
 		claimIndicatorClass,
-		...itemId ? '' : ['disabled'],
-		...claimedBy ? '' : ['unclaimed'],
+		...(itemId ? '' : ['disabled']),
+		...(claimedBy ? '' : ['unclaimed']),
 	].join(' ');
 
 	const priceDisplay = (
-		<span className="list-item__price">
-			{formatPrice(price, false)}
-		</span>
+		<span className="list-item__price">{formatPrice(price, false)}</span>
 	);
 
-	const handleClaimButtonClick = _ => {
+	const handleClaimButtonClick = () => {
 		if (!itemId) return;
-		dispatch(wsUpdateItemClaimedBy({
-			itemId,
-			listId,
-			userId: claimedBy === userId ? null : userId,
-		}));
+		dispatch(
+			wsUpdateItemClaimedBy({
+				itemId,
+				listId,
+				userId: claimedBy === userId ? null : userId,
+			})
+		);
 	};
 
 	return (
@@ -46,22 +42,17 @@ const SheetStoreProductsListItem = ({ data, id, index }) => {
 			gridAreaId={id}
 			priceDisplay={priceDisplay}
 		>
-			<div
-				className={claimButtonClasses}
-				onClick={handleClaimButtonClick}
-			>
-				<div style={{ backgroundColor: claimedBy && userColour }}/>
+			<div className={claimButtonClasses} onClick={handleClaimButtonClick}>
+				<div style={{ backgroundColor: claimedBy && userColour }} />
 			</div>
 			<div className="list-item__index">#{index + 1}</div>
-			<div
-				className="list-item__name"
-				title={name}
-			>{name}</div>
+			<div className="list-item__name" title={name}>
+				{name}
+			</div>
 
 			<div className="list-item__aisle">{aisle}</div>
-
 		</ListItemBase>
 	);
-}; 
+};
 
 export default SheetStoreProductsListItem;

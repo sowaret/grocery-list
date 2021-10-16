@@ -1,4 +1,3 @@
-const isObjectIdValid = objectId =>
-	objectId.length === 24; 
+const isObjectIdValid = objectId => objectId.length === 24;
 
 module.exports = { isObjectIdValid };

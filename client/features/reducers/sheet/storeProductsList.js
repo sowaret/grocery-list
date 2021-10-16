@@ -6,19 +6,17 @@ import {
 
 export default {
 	addStoreProduct: (state, action) => {
-		const storeProducts = {...state.storeProducts};
+		const storeProducts = { ...state.storeProducts };
 		const { storeProductId, storeProductDetails } = action.payload;
 		storeProducts[storeProductId] = storeProductDetails;
 		state.storeProducts = storeProducts;
 	},
 	reorderStoreProducts: (state, action) => {
-		const storeProducts = {...state.storeProducts};
+		const storeProducts = { ...state.storeProducts };
 		const { oldIndex, newIndex } = action.payload;
-		state.storeProducts = Object.fromEntries(arrayMove(
-			Object.entries(storeProducts),
-			oldIndex,
-			newIndex
-		));
+		state.storeProducts = Object.fromEntries(
+			arrayMove(Object.entries(storeProducts), oldIndex, newIndex)
+		);
 	},
 	setClaimColumnListId: (state, action) => {
 		const listId = action.payload;

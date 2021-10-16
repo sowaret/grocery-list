@@ -5,14 +5,14 @@ const formatListItems = listItems => {
 	const formattedItems = {};
 
 	listItems.forEach(item => {
-		const { _id, checked, claimedBy, store_product, quantity, sale_price } = item;
+		const { _id, checked, claimedBy, store_product, quantity, sale_price } =
+			item;
 		formattedItems[_id] = {
 			checked,
-			...claimedBy && { claimedBy },
+			...(claimedBy && { claimedBy }),
 			storeProductId: store_product.id,
 			quantity,
-			...sale_price && { salePrice: sale_price },
-
+			...(sale_price && { salePrice: sale_price }),
 		};
 	});
 
@@ -24,7 +24,7 @@ const formatLists = (_lists, populate) => {
 	_lists.forEach(list => {
 		lists[list._id] = {
 			name: list.name,
-			...populate && { items: formatListItems(list.list_items) },
+			...(populate && { items: formatListItems(list.list_items) }),
 		};
 	});
 
@@ -51,26 +51,31 @@ const createList = async ({ name, sheet }) => {
 	const newList = await new List({
 		name: name.trim() || formatCurrentDate(),
 		sheet,
-	}).save().catch(err => {
-		throw 'CREATE_LIST';
-	});
+	})
+		.save()
+		.catch(err => {
+			throw 'CREATE_LIST';
+		});
 
 	return newList;
 };
 
-const getListById = async (listId, populateFields = [], populateSheetFields = []) => {
+const getListById = async (
+	listId,
+	populateFields = [],
+	populateSheetFields = []
+) => {
 	// Convert any `populateFields` string to array
-	if (typeof(populateFields) === 'string')
-		populateFields = [populateFields];
+	if (typeof populateFields === 'string') populateFields = [populateFields];
 
 	// Convert any `populateSheetFields` string to array
-	if (typeof(populateSheetFields) === 'string')
+	if (typeof populateSheetFields === 'string')
 		populateSheetFields = [populateSheetFields];
 
 	if (
-		typeof(listId) !== 'string'
-		|| !Array.isArray(populateFields)
-		|| !Array.isArray(populateSheetFields)
+		typeof listId !== 'string' ||
+		!Array.isArray(populateFields) ||
+		!Array.isArray(populateSheetFields)
 	)
 		throw 'INVALID_PARAMETER_IN_CONTROLLER';
 
@@ -90,7 +95,6 @@ const getListById = async (listId, populateFields = [], populateSheetFields = []
 	if (list) return list;
 
 	throw 'LIST_NOT_FOUND';
-
 }; // getListById
 
 const getListsBySheet = async (sheet, shouldPopulateListItems = false) => {
@@ -106,8 +110,7 @@ const getListsBySheet = async (sheet, shouldPopulateListItems = false) => {
 };
 
 const renameList = async (listId, newName) => {
-	if (!isObjectIdValid(listId))
-		throw 'INVALID_LIST_ID';
+	if (!isObjectIdValid(listId)) throw 'INVALID_LIST_ID';
 	if (typeof newName !== 'string' || !newName.length)
 		throw 'NAME_MUST_BE_STRING';
 

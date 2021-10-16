@@ -8,6 +8,6 @@ export default createStore(
 	combineReducers({ app, sheet, user }),
 	compose(
 		applyMiddleware(wsMiddleware),
-		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-	),
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	)
 );

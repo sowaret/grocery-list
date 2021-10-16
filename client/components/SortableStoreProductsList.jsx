@@ -2,14 +2,15 @@ import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import SheetStoreProductsListItem from './SheetStoreProductsListItem';
 
-const SortableStoreProductItem = SortableElement( ({ props }) =>
-	React.createElement(SheetStoreProductsListItem, props));
+const SortableStoreProductItem = SortableElement(({ props }) =>
+	React.createElement(SheetStoreProductsListItem, props)
+);
 
-const SortableStoreProductsList = SortableContainer( ({ style, items }) => {
+const SortableStoreProductsList = SortableContainer(({ style, items }) => {
 	const sortableItemElements = Object.keys(items).map((id, i) => {
 		const props = {
 			index: i,
-			id: id,
+			id,
 			data: items[id],
 		};
 

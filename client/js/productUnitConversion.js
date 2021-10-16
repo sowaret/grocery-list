@@ -1,5 +1,4 @@
 const _mod = {
-
 	conversions: {
 		liquid: {
 			'fl oz': 1,
@@ -23,7 +22,11 @@ const _mod = {
 	calculatePerSize: (size, price, activePrice) => {
 		if (!size || !price) return;
 
-		let count, unit, originalUnit, containerCount, _,
+		let count,
+			unit,
+			originalUnit,
+			containerCount,
+			_,
 			multi = size.split('/').map(x => x.trim());
 
 		// Handle bottles
@@ -32,21 +35,18 @@ const _mod = {
 			[count, originalUnit] = _mod.countUnits(multi[1]);
 
 			count = count * containerCount;
-		}
-		else [count, originalUnit] = _mod.countUnits(size);
+		} else [count, originalUnit] = _mod.countUnits(size);
 
 		if (Object.keys(_mod.conversions.liquid).includes(originalUnit)) {
 			count = count * _mod.conversions.liquid[originalUnit];
 			unit = 'fl oz';
-		}
-		else if (Object.keys(_mod.conversions.weight).includes(originalUnit)) {
+		} else if (Object.keys(_mod.conversions.weight).includes(originalUnit)) {
 			count = count * _mod.conversions.weight[originalUnit];
 			unit = 'oz';
-		}
-		else unit = originalUnit;
+		} else unit = originalUnit;
 
 		// Convert units
-		const perSizeCost = Math.round( (activePrice / count) * 1000 ) / 1000;
+		const perSizeCost = Math.round((activePrice / count) * 1000) / 1000;
 		return `${perSizeCost}/${unit}`;
 	},
 };

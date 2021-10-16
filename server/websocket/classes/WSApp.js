@@ -36,13 +36,13 @@ class WSApp {
 	}
 
 	async findSheetOrCreate({ sheetId }) {
-		return this.sheets[sheetId]
-			|| await this.enrichSheetAndApplyToApp(sheetId);
+		return (
+			this.sheets[sheetId] || (await this.enrichSheetAndApplyToApp(sheetId))
+		);
 	}
 
 	async createSheetDocument({ user }) {
-		const { document, password } =
-			await createSheet({ owner: user.document });
+		const { document, password } = await createSheet({ owner: user.document });
 		const wsSheet = await this.enrichSheetAndApplyToApp(document.id);
 		await wsSheet.joinUser(user);
 		return { password, wsSheet };
@@ -57,8 +57,7 @@ class WSApp {
 	async validateSheetJoin({ client, password, sheetCode }) {
 		const { sheet } = await getSheetByCode(sheetCode);
 		const { passwordHash } = hash(password, '');
-		if (passwordHash !== sheet.password)
-			throw 'SHEET_PASSWORD_INCORRECT';
+		if (passwordHash !== sheet.password) throw 'SHEET_PASSWORD_INCORRECT';
 
 		const wsSheet = await this.findSheetOrCreate({ sheetId: sheet.id });
 		client.sheet = wsSheet;

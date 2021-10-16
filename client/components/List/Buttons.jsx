@@ -11,18 +11,18 @@ import {
 const ListButtons = ({ claimColumnListId, isHover, listId, newItemListId }) => {
 	const dispatch = useDispatch();
 
-	const handleAddItemButtonClick = _ => {
+	const handleAddItemButtonClick = () => {
 		if (newItemListId !== listId) dispatch(setNewItemListId(listId));
 		dispatch(setCurrentView('add-item'));
 	};
-	const handleClaimButtonClick = _ => {
+	const handleClaimButtonClick = () => {
 		if (claimColumnListId !== listId) dispatch(setClaimColumnListId(listId));
 		dispatch(showClaimColumn());
 	};
-	const handleViewChecklistButtonClick = _ => {
+	const handleViewChecklistButtonClick = () => {
 		dispatch(setChecklistListId(listId));
 		dispatch(setCurrentView('checklist'));
-	}
+	};
 
 	const buttonClasses = 'list__button circle material-icons';
 	const buttonsDisplay = [
@@ -41,15 +41,17 @@ const ListButtons = ({ claimColumnListId, isHover, listId, newItemListId }) => {
 			onClick: handleViewChecklistButtonClick,
 			title: 'View checklist',
 		},
-	].map(({ icon, onClick, title }, key) => React.createElement(
-		'div',
-		{ className: buttonClasses, key, onClick, title },
-		icon
-	));
+	].map(({ icon, onClick, title }, key) =>
+		React.createElement(
+			'div',
+			{ className: buttonClasses, key, onClick, title },
+			icon
+		)
+	);
 
 	const className = [
 		'list-buttons-container',
-		...isHover ? ['show'] : '',
+		...(isHover ? ['show'] : ''),
 	].join(' ');
 
 	return React.createElement('div', { className }, buttonsDisplay);

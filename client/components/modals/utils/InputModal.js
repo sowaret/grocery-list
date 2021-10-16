@@ -11,15 +11,13 @@ export const generateConfirmPasswordValidation = ({
 }) => ({
 	confirmPassword: {
 		allowEmpty: true,
-		invalidate: _ => {
-			const isInvalid = (additionalBoolean
-				&& (
-					// If passwords are not equal
-					fields.get(passwordField) !== fields.get('confirmPassword')
+		invalidate: () => {
+			const isInvalid =
+				additionalBoolean &&
+				// If passwords are not equal
+				(fields.get(passwordField) !== fields.get('confirmPassword') ||
 					// Always show error if password is empty
-					|| !fields.get(passwordField)
-				)
-			);
+					!fields.get(passwordField));
 
 			return isInvalid
 				? ['Password and confirmation password must match.']
@@ -37,7 +35,7 @@ export const generateFieldRefs = _fields => {
 		get: key => {
 			const value = refData[key].ref.current.value;
 			const mutator = refValueMutators[key];
-			return mutator && mutator(value) || value;
+			return (mutator && mutator(value)) || value;
 		},
 	};
 	Object.entries(fields).map(([key, options]) => {

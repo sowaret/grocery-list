@@ -35,7 +35,7 @@ const formatProductResults = productSearchResponse =>
 		const price = _price
 			? {
 					regular: _price.regular,
-					..._price.promo && { promo: _price.promo },
+					...(_price.promo && { promo: _price.promo }),
 			  }
 			: { regular: null };
 
@@ -50,9 +50,10 @@ const formatProductResults = productSearchResponse =>
 	});
 
 const getErrorEnum = (err, findErrorName) => {
-	const errorEnum = err.response.data.error === 'invalid_token'
-		? 'KROGER_INVALID_TOKEN'
-		: 'KROGER_FIND_' + findErrorName;
+	const errorEnum =
+		err.response.data.error === 'invalid_token'
+			? 'KROGER_INVALID_TOKEN'
+			: 'KROGER_FIND_' + findErrorName;
 	return errorEnum;
 };
 

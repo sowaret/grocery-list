@@ -6,18 +6,18 @@ import './styles/ChecklistItem';
 const ChecklistItem = ({ aisle, checked, itemId, listId, name, price }) => {
 	const dispatch = useDispatch();
 
-	const classes = [
-		'checklist-item',
-		...checked ? ['checked'] : '',
-	].join(' ');
+	const classes = ['checklist-item', ...(checked ? ['checked'] : '')].join(' ');
 
 	const checkboxText = checked ? 'check' : '';
 
-	const toggleChecked = _ => dispatch(wsUpdateItemChecked({
-		checked: !checked,
-		itemId,
-		listId,
-	}));
+	const toggleChecked = () =>
+		dispatch(
+			wsUpdateItemChecked({
+				checked: !checked,
+				itemId,
+				listId,
+			})
+		);
 
 	return (
 		<div className={classes}>

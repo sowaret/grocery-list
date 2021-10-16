@@ -7,7 +7,7 @@ const generateItemObject = ({ newItemListId, listItem }) => ({
 	itemDetails: {
 		storeProductId: listItem.store_product._id,
 		quantity: 1,
-		...listItem.sale_price && {salePrice: listItem.sale_price},
+		...(listItem.sale_price && { salePrice: listItem.sale_price }),
 	},
 });
 
@@ -21,7 +21,11 @@ const generateStoreProductObject = listItem => {
 	};
 };
 
-export default addItemAndStoreProductToList = ({ newItemListId, data, dispatch }) => {
+export default addItemAndStoreProductToList = ({
+	newItemListId,
+	data,
+	dispatch,
+}) => {
 	dispatch(setCurrentView(null));
 	if (data.exists) return;
 

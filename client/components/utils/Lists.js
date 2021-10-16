@@ -1,18 +1,19 @@
 import React from 'react';
-import API from '../../js/apiAccess';
 import { formatPrice } from '../../js/functions';
 import ListItem from '../ListItem';
 
 // General
 export const getProductGridRowNames = ({ storeProductIdList, items }) => {
-	const idList = storeProductIdList
-		? storeProductIdList // List
-		: items ? Object.keys(items) : []; // SheetStoreProductsList
+	const idList =
+		storeProductIdList || // List
+		(items // SheetStoreProductsList
+			? Object.keys(items)
+			: []);
 	const namedRows = idList.map(x => `'spid-${x}'`);
 
 	return {
 		gridTemplateAreas: namedRows.join(' '),
-		gridTemplateRows: `repeat(${namedRows.length}, 30px)`
+		gridTemplateRows: `repeat(${namedRows.length}, 30px)`,
 	};
 };
 // end general
@@ -27,16 +28,23 @@ export const getItemElementsFromStoreProductIds = data => {
 			return <div className="list-item" key={storeProductId} />;
 
 		const listItemId = kv_spId_itemId[storeProductId];
-		return <ListItem
-			data={items[listItemId]}
-			id={listItemId}
-			listId={id}
-			key={storeProductId}
-		/>;
+		return (
+			<ListItem
+				data={items[listItemId]}
+				id={listItemId}
+				listId={id}
+				key={storeProductId}
+			/>
+		);
 	});
 };
 
-export const getListItemsDisplay = ({ id, items, storeProductIdList, total }) => {
+export const getListItemsDisplay = ({
+	id,
+	items,
+	storeProductIdList,
+	total,
+}) => {
 	const kv_spId_itemId = mapStoreProductsToListItems(items);
 	const itemElements = getItemElementsFromStoreProductIds({
 		id,
@@ -62,11 +70,10 @@ export const getListItemsDisplay = ({ id, items, storeProductIdList, total }) =>
 };
 
 export const getTotalCost = ({ list, storeProducts }) => {
-	let total = 0;
-	Object.values(list.items).map(item => {
+	const total = Object.values(list.items).reduce((total, item) => {
 		const cost = item.salePrice || storeProducts[item.storeProductId].price;
-		if (cost) total += cost * item.quantity;
-	});
+		return cost ? total + cost * item.quantity : total;
+	}, 0);
 	return Math.round(total * 100) / 100;
 };
 
@@ -75,7 +82,7 @@ export const mapStoreProductsToListItems = items => {
 	// { storeProductId: listItemid }
 	const kv_spId_itemId = {};
 	Object.keys(items).map(listItemId => {
-		kv_spId_itemId[ items[listItemId].storeProductId ] = listItemId;
+		kv_spId_itemId[items[listItemId].storeProductId] = listItemId;
 	});
 
 	return kv_spId_itemId;

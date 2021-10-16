@@ -1,8 +1,14 @@
 const { model, Schema } = require('mongoose');
 
 // Create ObjectId reference fields
-const refModelNames =
-	['ListItem', 'Product', 'Sheet', 'Store', 'StoreProduct', 'User'];
+const refModelNames = [
+	'ListItem',
+	'Product',
+	'Sheet',
+	'Store',
+	'StoreProduct',
+	'User',
+];
 const refs = {};
 refModelNames.map(model => {
 	refs[model] = { ref: model, type: Schema.Types.ObjectId };

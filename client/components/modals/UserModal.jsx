@@ -9,26 +9,23 @@ import {
 } from './utils/InputModal';
 import './styles/UserModal';
 
-const UserModal = _ => {
+const UserModal = () => {
 	// UserModal-specific
 	const [isRegistering, _setIsRegistering] = useState(false);
 	const setIsRegistering = value => {
 		_setIsRegistering(value);
 		dispatch(setUserError());
 		setInputErrors([]);
-		setTimeout(_ => focusNextInput());
+		setTimeout(() => focusNextInput());
 	};
 	const dispatch = useDispatch();
 	// InputModal requirements
 	const title = isRegistering ? 'Register' : 'Log in';
-	const inputErrorState = [inputErrors, setInputErrors] = useState([]);
+	const inputErrorState = ([inputErrors, setInputErrors] = useState([]));
 	const reduxPOST = 'user';
 	const { currentPOST } = useSelector(state => state.app);
 	const isPOSTing = currentPOST === reduxPOST;
-	const classes = [
-		'UserModal',
-		...isRegistering ? ['register'] : '',
-	];
+	const classes = ['UserModal', ...(isRegistering ? ['register'] : '')];
 
 	// For responseErr and isVisible
 	const { _id: userId, error } = useSelector(state => state.user);
@@ -44,7 +41,7 @@ const UserModal = _ => {
 		},
 	});
 
-	const focusNextInput = _ => {
+	const focusNextInput = () => {
 		if (fields.username.ref.current.value) {
 			if (fields.password.ref.current.value && !isRegistering)
 				return fields.confirmPassword.ref.current.select();
@@ -58,34 +55,36 @@ const UserModal = _ => {
 		additionalBoolean: isRegistering,
 	});
 
-	return React.createElement(InputModal, {
-		iconName: isRegistering ? 'person_add_alt' : 'person_outline',
-		title,
-		classes,
-		isVisible: !userId,
-		additionalValidation,
-		buttonLabel: title,
-		inputErrorState,
-		isPOSTing,
-		fields,
-		focusNextInput,
-		reduxPOST,
-		webSocketSuccessReducer: isRegistering ? wsRegisterUser : wsLogInUser,
-		responseErr: error,
-		responseErrorFocusField: 'password',
-		responseErrorReducer: setUserError,
-	}, (
+	return React.createElement(
+		InputModal,
+		{
+			iconName: isRegistering ? 'person_add_alt' : 'person_outline',
+			title,
+			classes,
+			isVisible: !userId,
+			additionalValidation,
+			buttonLabel: title,
+			inputErrorState,
+			isPOSTing,
+			fields,
+			focusNextInput,
+			reduxPOST,
+			webSocketSuccessReducer: isRegistering ? wsRegisterUser : wsLogInUser,
+			responseErr: error,
+			responseErrorFocusField: 'password',
+			responseErrorReducer: setUserError,
+		},
 		<div className="input-modal__secondary">
 			or
 			<button
 				type="button"
-				onClick={_ => setIsRegistering(!isRegistering)}
+				onClick={() => setIsRegistering(!isRegistering)}
 				disabled={isPOSTing}
 			>
 				{isRegistering ? 'log in' : 'register'}
 			</button>
 		</div>
-	));
+	);
 };
 
 export default UserModal;

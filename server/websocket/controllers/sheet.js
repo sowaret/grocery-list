@@ -8,7 +8,7 @@ const populateSheet = ({ client, password, wsSheet }) => {
 		type: 'POPULATE_SHEET',
 		code,
 		lists,
-		...password && { password },
+		...(password && { password }),
 		sheetId: wsSheet.id,
 		store,
 		storeProducts,
@@ -19,14 +19,15 @@ const populateSheet = ({ client, password, wsSheet }) => {
 module.exports = {
 	CHANGE_SHEET_PASSWORD: {
 		try: async ({ client, data }) => {
-			await changeSheetPassword({...data, sheetId: client.sheet.id });
+			await changeSheetPassword({ ...data, sheetId: client.sheet.id });
 			send(client, { type: 'CHANGED_SHEET_PASSWORD' });
 		},
-		catch: ({ client, error }) => formatAndHandleError({
-			client,
-			culprit: 'SheetDetailsModal',
-			error,
-		}),
+		catch: ({ client, error }) =>
+			formatAndHandleError({
+				client,
+				culprit: 'SheetDetailsModal',
+				error,
+			}),
 	},
 	CREATE_SHEET: {
 		try: async ({ App, client, data }) => {
@@ -34,11 +35,12 @@ module.exports = {
 			client.sheet = wsSheet;
 			populateSheet({ client, password, wsSheet });
 		},
-		catch: ({ client, error }) => handleError({
-			client,
-			culprit: 'JoinSheetModal',
-			...error,
-		}),
+		catch: ({ client, error }) =>
+			handleError({
+				client,
+				culprit: 'JoinSheetModal',
+				...error,
+			}),
 	},
 	JOIN_SHEET: {
 		try: async ({ App, client, data }) => {
@@ -60,11 +62,12 @@ module.exports = {
 			// Tell connecting client the sheet's state
 			populateSheet({ client, wsSheet });
 		},
-		catch: ({ client, error }) => formatAndHandleError({
-			client,
-			culprit: 'JoinSheetModal',
-			error,
-		}),
+		catch: ({ client, error }) =>
+			formatAndHandleError({
+				client,
+				culprit: 'JoinSheetModal',
+				error,
+			}),
 	},
 	REORDER_STORE_PRODUCTS: {
 		try: async ({ App, client, data }) => {

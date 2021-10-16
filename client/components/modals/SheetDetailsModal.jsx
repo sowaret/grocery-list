@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setDetailsError } from '../../features/sheetSlice';
 import { wsChangeSheetPassword } from '../../webSocketModule';
 import InputModal from './InputModal';
@@ -8,15 +8,13 @@ import {
 	generateFieldRefs,
 } from './utils/InputModal';
 
-const SheetDetailsModal = _ => {
+const SheetDetailsModal = () => {
 	const { currentPOST, currentView } = useSelector(state => state.app);
-	const dispatch = useDispatch();
 	// InputModal requirements
 	const isVisible = currentView && currentView.startsWith('sheet-details-');
 	const context = isVisible && currentView.split('sheet-details-')[1];
-	const title = context === 'password'
-		? 'Change sheet password'
-		: 'Sheet details';
+	const title =
+		context === 'password' ? 'Change sheet password' : 'Sheet details';
 	const reduxPOST = 'sheet-details';
 	const isPOSTing = currentPOST === reduxPOST;
 
@@ -30,11 +28,10 @@ const SheetDetailsModal = _ => {
 		confirmPassword: { label: 'confirm password', type: 'password' },
 	});
 
-	const focusNextInput = _ => {
+	const focusNextInput = () => {
 		let field = 'oldPassword';
 		if (fields.get('oldPassword'))
-			if (fields.get('newPassword'))
-				field = 'confirmPassword';
+			if (fields.get('newPassword')) field = 'confirmPassword';
 			else field = 'newPassword';
 
 		fields[field].ref.current.focus();

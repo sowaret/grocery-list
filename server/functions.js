@@ -1,5 +1,5 @@
 module.exports = {
-	formatCurrentDate: _ => {
+	formatCurrentDate: () => {
 		const date = new Date();
 		return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 	},
@@ -20,5 +20,5 @@ module.exports = {
 	// WebSocket send
 	send: (client, data) => client.send(JSON.stringify(data)),
 
-	unixTimestamp: _ => Math.floor(Date.now() / 1000),
+	unixTimestamp: () => Math.floor(Date.now() / 1000),
 };

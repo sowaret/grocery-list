@@ -2,7 +2,7 @@ const { err: ERROR } = require('../../enums');
 const { generateRandomCode } = require('../../functions');
 const { Sheet } = require('../../models');
 
-const generateSheetCode = async _ => {
+const generateSheetCode = async () => {
 	const code = generateRandomCode(4);
 	const sheet = await Sheet.findOne({ code });
 	// Retry if this code is already in use
@@ -66,8 +66,7 @@ const populateSheetDetails = async (filter, populateFields) => {
 		if (populateFields.includes('store_products'))
 			populateStoreProducts({ sheet, response });
 
-		if (populateFields.includes('users'))
-			populateUsers({ sheet, response });
+		if (populateFields.includes('users')) populateUsers({ sheet, response });
 
 		return response;
 	} catch (err) {

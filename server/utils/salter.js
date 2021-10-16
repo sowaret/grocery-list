@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 const methods = {
-	generateSalt: _ => crypto.randomBytes(8).toString('hex').slice(0, 15),
+	generateSalt: () => crypto.randomBytes(8).toString('hex').slice(0, 15),
 	hasher: (password, salt) => {
 		const hash = crypto.createHmac('sha512', salt).update(password);
 		const passwordHash = hash.digest('hex');

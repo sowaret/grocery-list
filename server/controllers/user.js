@@ -21,17 +21,16 @@ const findUserByUsername = (username, errorEnum) =>
 const createUser = async ({ confirmPassword, password, username }) => {
 	try {
 		validateUsernameAndPassword({ password, username });
-		if (password !== confirmPassword)
-			throw 'CONFIRM_PASSWORD_DOESNT_MATCH';
+		if (password !== confirmPassword) throw 'CONFIRM_PASSWORD_DOESNT_MATCH';
 
 		try {
 			const user = await findUserByUsername(username, 'CREATE_USER');
 			if (user) throw 'USER_ALREADY_EXISTS';
 
-			const {
-				salt,
-				passwordHash: password_hash,
-			} = salter.hash(password, salter.generateSalt());
+			const { salt, passwordHash: password_hash } = salter.hash(
+				password,
+				salter.generateSalt()
+			);
 			const newUser = new User({ password_hash, salt, username });
 			await newUser.save().catch(err => {
 				throw 'CREATE_USER';

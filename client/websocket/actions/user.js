@@ -35,6 +35,6 @@ const otherReducers = {
 		dispatch(setUser({ _id: null }));
 		resetLoginCookie();
 	},
-}
+};
 
 module.exports = { userActions: actions, otherUserReducers: otherReducers };

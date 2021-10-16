@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import anime from 'animejs/lib/anime.min.js';
-import { updateItemQuantity } from '../features/sheetSlice';
-import API from '../js/apiAccess';
 import { formatPrice } from '../js/functions';
 import { wsUpdateItemQuantity } from '../webSocketModule';
 import ListItemBase from './ListItemBase';
@@ -20,13 +18,11 @@ const ListItem = ({ data, id, listId }) => {
 
 	const classes = [
 		'list-item--list',
-		...item.salePrice ? ['list-item--sale'] : '',
+		...(item.salePrice ? ['list-item--sale'] : ''),
 	].join(' ');
 
 	const priceDisplay = (
-		<span className="list-item__sale-price">
-			{formatPrice(item.salePrice)}
-		</span>
+		<span className="list-item__sale-price">{formatPrice(item.salePrice)}</span>
 	);
 
 	const quantityTimer = useRef();
@@ -34,20 +30,18 @@ const ListItem = ({ data, id, listId }) => {
 
 	const dispatch = useDispatch();
 
-	const increaseQuantity = _ => setTempQuantity(tempQuantity + 1);
-	const decreaseQuantity = _ => setTempQuantity(
-		Math.max(1, tempQuantity - 1)
-	);
-	const updateQuantity = _ => {
+	const increaseQuantity = () => setTempQuantity(tempQuantity + 1);
+	const decreaseQuantity = () => setTempQuantity(Math.max(1, tempQuantity - 1));
+	const updateQuantity = () => {
 		clearTimeout(quantityTimer.current);
 		if (saveQuantity !== tempQuantity) setSaveQuantity(tempQuantity);
 	};
 
 	// On mount
-	useEffect(_ => setDidMount(true), []);
+	useEffect(() => setDidMount(true), []);
 
 	// When the quantity is changed, reset the delay to save that change
-	useEffect(_ => {
+	useEffect(() => {
 		if (!didMount) return;
 
 		clearTimeout(quantityTimer.current);
@@ -55,24 +49,25 @@ const ListItem = ({ data, id, listId }) => {
 	}, [tempQuantity]);
 
 	// Apply updated quantity
-	useEffect(_ => {
+	useEffect(() => {
 		if (!didMount) return;
 
-		dispatch(wsUpdateItemQuantity({
-			itemId: id,
-			listId,
-			quantity: saveQuantity
-		}));
-
+		dispatch(
+			wsUpdateItemQuantity({
+				itemId: id,
+				listId,
+				quantity: saveQuantity,
+			})
+		);
 	}, [saveQuantity]);
 
 	// Flash websocket quantity update
-	useEffect(_ => {
+	useEffect(() => {
 		if (!didMount) return;
 
 		setTempQuantity(reduxQuantity);
 		// Prevent tempQuantity useEffect timer from updating new quantity again
-		setTimeout(_ => clearTimeout(quantityTimer.current), 0);
+		setTimeout(() => clearTimeout(quantityTimer.current), 0);
 
 		// Flash update animation
 		anime({
@@ -98,11 +93,15 @@ const ListItem = ({ data, id, listId }) => {
 				<div
 					className="list-item__quantity-button material-icons"
 					onClick={increaseQuantity}
-				>keyboard_arrow_up</div>
+				>
+					keyboard_arrow_up
+				</div>
 				<div
 					className="list-item__quantity-button material-icons"
 					onClick={decreaseQuantity}
-				>keyboard_arrow_down</div>
+				>
+					keyboard_arrow_down
+				</div>
 			</div>
 		</ListItemBase>
 	);

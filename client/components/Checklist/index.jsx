@@ -12,9 +12,9 @@ const getOrderedItemList = ({ storeProducts, items }) => {
 	for (const [itemId, data] of Object.entries(items))
 		itemsByStoreProductId[data.storeProductId] = { itemId, ...data };
 
-	return Object.keys(storeProducts).map(
-		storeProductId => itemsByStoreProductId[storeProductId]
-	).filter(x => x);
+	return Object.keys(storeProducts)
+		.map(storeProductId => itemsByStoreProductId[storeProductId])
+		.filter(x => x);
 };
 
 const Checklist = ({ listId }) => {
@@ -32,8 +32,7 @@ const Checklist = ({ listId }) => {
 	getOrderedItemList({ storeProducts, items }).map(
 		({ checked, claimedBy, itemId, storeProductId, quantity }) => {
 			const userId = claimedBy || 'unclaimed';
-			if (!(userId in itemListByUser))
-				itemListByUser[userId] = [];
+			if (!(userId in itemListByUser)) itemListByUser[userId] = [];
 			const { aisle, name, price } = storeProducts[storeProductId];
 			itemListByUser[userId].push({
 				aisle,
@@ -47,29 +46,31 @@ const Checklist = ({ listId }) => {
 	);
 	if (!itemListByUser.unclaimed.length) delete itemListByUser.unclaimed;
 	const userChecklists = Object.entries(itemListByUser).map(
-		([userId, items], key) =>
+		([userId, items], key) => (
 			<UserChecklist user={users[userId]} items={items} key={key} />
+		)
 	);
 
-	const handleChecklistClose = _ => {
+	const handleChecklistClose = () => {
 		clearTimeout(scrollTimeoutRef.current);
 		dispatch(setChecklistListId());
 		dispatch(setCurrentView());
 	};
 
-	const handleScroll = _ => {
+	const handleScroll = () => {
 		clearTimeout(scrollTimeoutRef.current);
 		setCloseButtonOpacity(1);
-		scrollTimeoutRef.current = setTimeout(_ => setCloseButtonOpacity(0), 1250);
+		scrollTimeoutRef.current = setTimeout(() => setCloseButtonOpacity(0), 1250);
 	};
 
 	// On mount, bind event listeners
-	useEffect(_ => {
+	useEffect(() => {
 		const content = contentRef.current;
 		content.addEventListener('touchstart', handleScroll);
 		content.addEventListener('mousemove', handleScroll);
 
-		return cleanup = _ => content.removeEventListener('touchstart', handleScroll);
+		return (cleanup = () =>
+			content.removeEventListener('touchstart', handleScroll));
 	}, []);
 
 	return (
@@ -83,9 +84,7 @@ const Checklist = ({ listId }) => {
 				>
 					close
 				</div>
-				<div className="checklist__lists">
-					{userChecklists}
-				</div>
+				<div className="checklist__lists">{userChecklists}</div>
 			</div>
 		</div>
 	);

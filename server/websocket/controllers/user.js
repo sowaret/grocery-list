@@ -3,9 +3,8 @@ const { send } = require('../../functions');
 const { handleError } = require('./utils/errorHandling');
 
 const processUserConnect = async ({ App, client, data, type }) => {
-	const controller = type === 'REGISTERED_USER'
-		? createUser
-		: validateUserLogin;
+	const controller =
+		type === 'REGISTERED_USER' ? createUser : validateUserLogin;
 	const userDocument = await controller(data);
 
 	const { _id, username } = userDocument;

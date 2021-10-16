@@ -10,7 +10,7 @@ import SortableStoreProductsList from './SortableStoreProductsList';
 
 const SheetStoreProductsList = ({ helperContainer }) => {
 	const storeName = useSelector(state => state.sheet.store.name);
-	const { showClaimColumn, storeProducts } = useSelector(state => state.sheet);
+	const storeProducts = useSelector(state => state.sheet.storeProducts);
 	const storeProductIdList = Object.keys(storeProducts);
 
 	const onSortEnd = ({ oldIndex, newIndex }) =>
@@ -27,9 +27,9 @@ const SheetStoreProductsList = ({ helperContainer }) => {
 		helperClass: 'list-item--sorting',
 		lockAxis: 'y',
 		transitionDuration: 200,
-		distance: 1, /* Prevent click from triggering */
+		distance: 1 /* Prevent click from triggering */,
 		helperContainer,
-		onSortStart: _ => dispatch(setIsSorting(true)),
+		onSortStart: () => dispatch(setIsSorting(true)),
 		onSortEnd,
 		shouldCancelStart: e => isTargetClaimIndicator(e.target),
 	});
@@ -42,15 +42,12 @@ const SheetStoreProductsList = ({ helperContainer }) => {
 	};
 
 	return (
-		<BaseList
-			className="SheetStoreProductsList"
-			itemsDisplay={itemsDisplay}
-		>
+		<BaseList className="SheetStoreProductsList" itemsDisplay={itemsDisplay}>
 			<div className="store-header">
 				<button
 					className="header__menu-button material-icons"
 					title="Settings"
-					onClick={_ => dispatch(setCurrentView('side-menu'))}
+					onClick={() => dispatch(setCurrentView('side-menu'))}
 				>
 					tune
 				</button>
@@ -61,9 +58,7 @@ const SheetStoreProductsList = ({ helperContainer }) => {
 				>
 					list_alt
 				</button>
-				<div className="header__store-name">
-					{storeName || 'Grocery List'}
-				</div>
+				<div className="header__store-name">{storeName || 'Grocery List'}</div>
 			</div>
 		</BaseList>
 	);

@@ -14,38 +14,34 @@ const SearchModal = ({
 	resultComponent,
 	onResultSelect,
 	isVisible,
-	children,
 }) => {
 	// - inputState must be array of [value, setterFunction]
 	const [results, setResults] = useState([]);
 	const [value, setValue] = inputState;
-	const classes = [
-		'SearchModal',
-		...className ? [className] : '',
-	].join(' ');
+	const classes = ['SearchModal', ...(className ? [className] : '')].join(' ');
 	const resultsDisplay = results.length
 		? results.map((result, i) =>
-			React.createElement(resultComponent, {
-				key: i,
-				data: result,
-				onClick: onResultSelect,
-			}))
+				React.createElement(resultComponent, {
+					key: i,
+					data: result,
+					onClick: onResultSelect,
+				})
+		  )
 		: null;
 	const inputRef = useRef();
 
-	const clearInputAndFocus = _ => {
+	const clearInputAndFocus = () => {
 		inputRef.current.value = '';
-		setTimeout(_ => inputRef.current.focus());
+		setTimeout(() => inputRef.current.focus());
 	};
 	const searchOnEnterKey = e => {
 		if (e.key === 'Enter') executeSearch();
 	};
-	const executeSearch = _ => {
+	const executeSearch = () =>
 		API.get(formatString(apiUrl, ...searchArgs), {
 			success: data => setResults(data),
 			fail: err => alert(`Search failed:\n${err.messages.join('\n')}`),
 		});
-	};
 
 	return (
 		<Modal

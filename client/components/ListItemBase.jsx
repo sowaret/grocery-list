@@ -1,4 +1,5 @@
 import React from 'react';
+import useClasses from '../hooks/useClasses';
 import './styles/ListItems';
 
 const ListItemBase = ({
@@ -8,7 +9,7 @@ const ListItemBase = ({
 	priceDisplay,
 	children,
 }) => {
-	const classes = ['list-item', ...(className ? [className] : '')].join(' ');
+	const classes = useClasses('list-item', className);
 	const gridAreaStyle = { gridArea: `spid-${gridAreaId}` };
 
 	return (

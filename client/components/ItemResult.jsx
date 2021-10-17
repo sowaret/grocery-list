@@ -1,4 +1,5 @@
 import React from 'react';
+import useClasses from '../hooks/useClasses';
 import { formatPrice } from '../js/functions';
 import { calculatePerSize } from '../js/productUnitConversion';
 import './styles/ItemResult';
@@ -11,12 +12,12 @@ const ItemResult = ({ data, onClick }) => {
 	const imageUrl = `${imageUrlBase}${item.upc}`;
 	const { regular: price, promo: salePrice } = item.price;
 	const activePrice = salePrice || price;
-	const classes = [
-		'ItemResult',
-		...(price ? '' : ['noprice']),
-		...(salePrice ? ['sale'] : ''),
-	].join(' ');
 	const perSize = calculatePerSize(size, price, activePrice);
+	const classes = useClasses(
+		'ItemResult',
+		!price && 'noprice',
+		salePrice && 'sale'
+	);
 
 	const priceDisplay = (
 		<div className="itemResult-prices">

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import anime from 'animejs/lib/anime.min.js';
+import useClasses from '../hooks/useClasses';
 import { formatPrice } from '../js/functions';
 import { wsUpdateItemQuantity } from '../webSocketModule';
 import ListItemBase from './ListItemBase';
@@ -16,19 +17,17 @@ const ListItem = ({ data, id, listId }) => {
 	const [saveQuantity, setSaveQuantity] = useState(item.quantity);
 	const [didMount, setDidMount] = useState(false);
 
-	const classes = [
+	const classes = useClasses(
 		'list-item--list',
-		...(item.salePrice ? ['list-item--sale'] : ''),
-	].join(' ');
+		item.salePrice && 'list-item--sale'
+	);
+	const quantityTimer = useRef();
+	const baseElementRef = useRef();
+	const dispatch = useDispatch();
 
 	const priceDisplay = (
 		<span className="list-item__sale-price">{formatPrice(item.salePrice)}</span>
 	);
-
-	const quantityTimer = useRef();
-	const baseElementRef = useRef();
-
-	const dispatch = useDispatch();
 
 	const increaseQuantity = () => setTempQuantity(tempQuantity + 1);
 	const decreaseQuantity = () => setTempQuantity(Math.max(1, tempQuantity - 1));

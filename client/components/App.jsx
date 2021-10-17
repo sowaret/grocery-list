@@ -9,21 +9,20 @@ import UserModal from './modals/UserModal';
 import Sheet from './Sheet';
 import SideMenu from './SideMenu';
 // Other imports
+import useClasses from '../hooks/useClasses';
 import { wsConnect } from '../webSocketModule';
 
 const App = () => {
 	const { currentPOST, currentView } = useSelector(state => state.app);
 	const { isSorting, showClaimColumn } = useSelector(state => state.sheet);
 
-	// Classes
-	const classes = [
+	const classes = useClasses(
 		'App',
-		...(isSorting ? ['sorting'] : ''),
-		...(currentPOST ? [`posting-${currentPOST}`] : ''),
-		...(currentView ? ['no-scroll'] : ''),
-		...(showClaimColumn ? ['show-claim-column'] : ''),
-	].join(' ');
-
+		isSorting && 'sorting',
+		currentPOST && `posting-${currentPOST}`,
+		currentView && 'no-scroll',
+		showClaimColumn && 'show-claim-column'
+	);
 	const rootRef = useRef();
 	const dispatch = useDispatch();
 

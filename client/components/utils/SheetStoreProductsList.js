@@ -1,4 +1,4 @@
-import { setIsSorting, reorderStoreProducts } from '../../features/sheetSlice';
+import { setIsSorting } from '../../features/sheetSlice';
 import { wsReorderStoreProducts } from '../../webSocketModule';
 
 export default updateStoreProductListSort = data => {

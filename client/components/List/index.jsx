@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
+import useClasses from '../../hooks/useClasses';
 import BaseList from '../BaseList';
+import { getListItemsDisplay, getTotalCost } from '../utils/Lists';
 import ListButtons from './Buttons';
 import ListName from './Name';
-import { getListItemsDisplay, getTotalCost } from '../utils/Lists';
 
 const List = ({ id }) => {
 	// Redux
@@ -18,10 +19,10 @@ const List = ({ id }) => {
 	const [storeProductIdList, setStoreProductIdList] = useState([]);
 	const [total, setTotal] = useState(0);
 
-	const classes = [
+	const classes = useClasses(
 		'List',
-		...(claimColumnListId === id ? ['claim-column-selected'] : ''),
-	].join(' ');
+		claimColumnListId === id && 'claim-column-selected'
+	);
 
 	const baseElementRef = useRef();
 

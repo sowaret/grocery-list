@@ -7,8 +7,10 @@ import {
 	setNewItemListId,
 	showClaimColumn,
 } from '../../features/sheetSlice';
+import useClasses from '../../hooks/useClasses';
 
 const ListButtons = ({ claimColumnListId, isHover, listId, newItemListId }) => {
+	const className = useClasses('list-buttons-container', isHover && 'show');
 	const dispatch = useDispatch();
 
 	const handleAddItemButtonClick = () => {
@@ -48,11 +50,6 @@ const ListButtons = ({ claimColumnListId, isHover, listId, newItemListId }) => {
 			icon
 		)
 	);
-
-	const className = [
-		'list-buttons-container',
-		...(isHover ? ['show'] : ''),
-	].join(' ');
 
 	return React.createElement('div', { className }, buttonsDisplay);
 };

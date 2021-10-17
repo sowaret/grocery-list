@@ -1,15 +1,12 @@
 import React from 'react';
+import useClasses from '../hooks/useClasses';
 import './styles/List';
 
-const BaseList = ({ className, itemsDisplay, children }) => {
-	const classes = ['BaseList', ...(className ? [className] : [])].join(' ');
-
-	return (
-		<div className={classes}>
-			{children}
-			{itemsDisplay}
-		</div>
-	);
-};
+const BaseList = ({ className, itemsDisplay, children }) => (
+	<div className={useClasses('BaseList', className)}>
+		{children}
+		{itemsDisplay}
+	</div>
+);
 
 export default BaseList;

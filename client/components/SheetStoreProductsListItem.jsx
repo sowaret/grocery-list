@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useClasses from '../hooks/useClasses';
 import { formatPrice } from '../js/functions';
-import ListItemBase from './ListItemBase';
 import { wsUpdateItemClaimedBy } from '../webSocketModule';
+import ListItemBase from './ListItemBase';
 
 export const claimIndicatorClass = 'list-item__claim-indicator';
 export const isTargetClaimIndicator = target =>
@@ -15,11 +16,11 @@ const SheetStoreProductsListItem = ({ data, id, index }) => {
 	const { aisle, claimedBy, name, itemId, price, userColour } = data;
 	const dispatch = useDispatch();
 
-	const claimButtonClasses = [
+	const claimButtonClasses = useClasses(
 		claimIndicatorClass,
-		...(itemId ? '' : ['disabled']),
-		...(claimedBy ? '' : ['unclaimed']),
-	].join(' ');
+		!itemId && 'disabled',
+		!claimedBy && 'unclaimed'
+	);
 
 	const priceDisplay = (
 		<span className="list-item__price">{formatPrice(price, false)}</span>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentView } from '../../features/appSlice';
+import useClasses from '../../hooks/useClasses';
 import { fadeInModal, fadeOutModal } from '../utils/Modals';
 import './styles/Modals';
 
@@ -13,11 +14,10 @@ const Modal = ({
 	isVisible,
 	children,
 }) => {
-	const classes = [
-		'Modal',
-		...(className ? [className] : ''),
-		...(isVisible ? ['visible'] : ''),
-	].join(' ');
+	const classes = useClasses('Modal', className, isVisible && 'visible');
+	const baseElementRef = useRef();
+	const containerElementRef = useRef();
+	const dispatch = useDispatch();
 
 	const openModal = () => {
 		fadeInModal(baseElementRef, containerElementRef);
@@ -37,11 +37,6 @@ const Modal = ({
 		// Reset the current view to trigger the modal to close
 		dispatch(setCurrentView(null));
 	};
-
-	const baseElementRef = useRef();
-	const containerElementRef = useRef();
-
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (isVisible) openModal();

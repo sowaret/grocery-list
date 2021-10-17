@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import useClasses from '../../hooks/useClasses';
 import { wsRenameList } from '../../webSocketModule';
 
 const ListName = ({ listId, name }) => {
@@ -7,13 +8,9 @@ const ListName = ({ listId, name }) => {
 	const [isEditingName, setIsEditingName] = useState(false);
 	const [newName, setNewName] = useState(name);
 
-	const dispatch = useDispatch();
-
-	const classes = ['list-name', ...(isEditingName ? ['editing'] : '')].join(
-		' '
-	);
-
+	const classes = useClasses('list-name', isEditingName && 'editing');
 	const nameInputRef = useRef();
+	const dispatch = useDispatch();
 
 	// Methods
 	const saveNameEdit = () => {

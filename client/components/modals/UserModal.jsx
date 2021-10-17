@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserError } from '../../features/userSlice';
+import useClasses from '../../hooks/useClasses';
 import { wsLogInUser, wsRegisterUser } from '../../webSocketModule';
 import InputModal from './InputModal';
 import {
@@ -25,7 +26,7 @@ const UserModal = () => {
 	const reduxPOST = 'user';
 	const { currentPOST } = useSelector(state => state.app);
 	const isPOSTing = currentPOST === reduxPOST;
-	const classes = ['UserModal', ...(isRegistering ? ['register'] : '')];
+	const classes = useClasses('UserModal', isRegistering && 'register');
 
 	// For responseErr and isVisible
 	const { _id: userId, error } = useSelector(state => state.user);

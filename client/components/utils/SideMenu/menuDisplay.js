@@ -1,5 +1,5 @@
 import React from 'react';
-import { joinClasses } from './joinClasses';
+import useClasses from '../../../hooks/useClasses';
 
 const changePasswordItem = { icon: 'password', text: 'Change password' };
 const getMenuItems = ({ functions: f, params: p }) => ({
@@ -20,7 +20,7 @@ const getMenuItems = ({ functions: f, params: p }) => ({
 const getLabelDisplay = label => {
 	if (!label) return;
 	const { classes, value } = label;
-	const className = joinClasses('menu__section-label', [classes, classes]);
+	const className = useClasses('menu__section-label', classes);
 	return React.createElement('span', { className }, value);
 };
 
@@ -38,10 +38,10 @@ const getUsersDisplay = users =>
 		{ className: 'menu__user-list' },
 		Object.values(users).map((user, key) => {
 			const usernameFirstLetter = user.username.slice(0, 1).toUpperCase();
-			const className = joinClasses('menu__user', [
-				user.isDisconnected,
-				'disconnected',
-			]);
+			const className = useClasses(
+				'menu__user',
+				user.isDisconnected && 'disconnected'
+			);
 			const style = { backgroundColor: user.customColour };
 			return React.createElement(
 				'div',
@@ -56,7 +56,7 @@ const getItemsDisplay = (items, header) =>
 		? getUsersDisplay(items)
 		: items.map((item, i) => {
 				const { classes, icon, onClick, text } = item;
-				const className = joinClasses('menu__item', classes);
+				const className = useClasses('menu__item', classes);
 				const iconDisplay = getIconDisplay(icon);
 				if (header === 'Users') return;
 				return React.createElement(

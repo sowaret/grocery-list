@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentPOST } from '../../features/appSlice';
+import useClasses from '../../hooks/useClasses';
 import { capitalize } from '../../js/functions';
 import Modal from './Modal';
 import './styles/InputModal';
@@ -29,11 +30,8 @@ const InputModal = ({
 		throw `${classes} responseErrorFocusField is invalid`;
 
 	const [inputErrors, setInputErrors] = inputErrorState || useState([]);
-	const className = [
-		'InputModal',
-		...classes,
-		...(isPOSTing ? ['posting'] : ''),
-	].join(' ');
+	const className = useClasses('InputModal', classes, isPOSTing && 'posting');
+
 	// Filter out `get` from field refs
 	const formFields = Object.fromEntries(
 		Object.entries(fields).filter(x => x[0] !== 'get')

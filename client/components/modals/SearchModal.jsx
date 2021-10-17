@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import useClasses from '../../hooks/useClasses';
 import API from '../../js/apiAccess';
 import { formatString } from '../../js/functions';
 import Modal from './Modal';
@@ -18,7 +19,9 @@ const SearchModal = ({
 	// - inputState must be array of [value, setterFunction]
 	const [results, setResults] = useState([]);
 	const [value, setValue] = inputState;
-	const classes = ['SearchModal', ...(className ? [className] : '')].join(' ');
+	const classes = useClasses('SearchModal', className);
+	const inputRef = useRef();
+
 	const resultsDisplay = results.length
 		? results.map((result, i) =>
 				React.createElement(resultComponent, {
@@ -28,7 +31,6 @@ const SearchModal = ({
 				})
 		  )
 		: null;
-	const inputRef = useRef();
 
 	const clearInputAndFocus = () => {
 		inputRef.current.value = '';

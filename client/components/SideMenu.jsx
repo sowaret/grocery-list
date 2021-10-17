@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentView } from '../features/appSlice';
-import { animeTarget, getMenuDisplay, joinClasses } from './utils/SideMenu';
+import useClasses from '../hooks/useClasses';
+import { animeTarget, getMenuDisplay } from './utils/SideMenu';
 import './styles/SideMenu';
 
 const SideMenu = () => {
@@ -11,7 +12,7 @@ const SideMenu = () => {
 	const { username } = useSelector(state => state.user);
 	// end state
 	const isOpen = currentView === 'side-menu';
-	const classes = joinClasses('side-menu', [isOpen, 'open']);
+	const classes = useClasses('side-menu', isOpen && 'open');
 	// Refs
 	const coverRef = useRef();
 	const menuRef = useRef();

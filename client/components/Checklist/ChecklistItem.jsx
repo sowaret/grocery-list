@@ -1,14 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import useClasses from '../../hooks/useClasses';
 import { wsUpdateItemChecked } from '../../webSocketModule';
 import './styles/ChecklistItem';
 
 const ChecklistItem = ({ aisle, checked, itemId, listId, name, price }) => {
-	const dispatch = useDispatch();
-
-	const classes = ['checklist-item', ...(checked ? ['checked'] : '')].join(' ');
-
+	const classes = useClasses('checklist-item', checked && 'checked');
 	const checkboxText = checked ? 'check' : '';
+	const dispatch = useDispatch();
 
 	const toggleChecked = () =>
 		dispatch(

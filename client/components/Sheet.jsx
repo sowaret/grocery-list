@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentView } from '../features/appSlice';
+import useClasses from '../hooks/useClasses';
 import { formatCurrentDate } from '../js/functions';
 import { wsCreateList } from '../webSocketModule';
 import Checklist from './Checklist';
@@ -11,7 +12,10 @@ const Sheet = ({ appRoot }) => {
 	const { checklistListId, id, lists } = useSelector(state => state.sheet);
 	const listIds = Object.keys(lists);
 	const listCount = listIds.length;
-	const classes = ['sheet-display', ...(id ? '' : ['hidden'])].join(' ');
+
+	const classes = useClasses('sheet-display', !id && 'hidden');
+	const listElementsRef = useRef();
+	const dispatch = useDispatch();
 
 	const listElements = listIds.map((id, i) => <List id={id} key={i} />);
 
@@ -28,9 +32,6 @@ const Sheet = ({ appRoot }) => {
 		...gridRepeatStyle,
 		transform: `translateX(-${listHeaderTranslateX}px)`,
 	};
-
-	const listElementsRef = useRef();
-	const dispatch = useDispatch();
 
 	const promptCreateList = () => {
 		const name = prompt('New list name:', formatCurrentDate());

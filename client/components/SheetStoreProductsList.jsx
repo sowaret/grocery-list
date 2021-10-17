@@ -12,6 +12,7 @@ const SheetStoreProductsList = ({ helperContainer }) => {
 	const storeName = useSelector(state => state.sheet.store.name);
 	const storeProducts = useSelector(state => state.sheet.storeProducts);
 	const storeProductIdList = Object.keys(storeProducts);
+	const dispatch = useDispatch();
 
 	const onSortEnd = ({ oldIndex, newIndex }) =>
 		updateStoreProductListSort({
@@ -33,8 +34,6 @@ const SheetStoreProductsList = ({ helperContainer }) => {
 		onSortEnd,
 		shouldCancelStart: e => isTargetClaimIndicator(e.target),
 	});
-
-	const dispatch = useDispatch();
 
 	const toggleClaimColumnAndBlurButton = e => {
 		e.target.blur();

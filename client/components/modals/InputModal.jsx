@@ -4,7 +4,7 @@ import { setCurrentPOST } from '../../features/appSlice';
 import useClasses from '../../hooks/useClasses';
 import { capitalize } from '../../js/functions';
 import Modal from './Modal';
-import './styles/InputModal';
+import './styles/InputModal.css';
 
 const InputModal = ({
 	iconName,
@@ -32,9 +32,9 @@ const InputModal = ({
 	const [inputErrors, setInputErrors] = inputErrorState || useState([]);
 	const className = useClasses('InputModal', classes, isPOSTing && 'posting');
 
-	// Filter out `get` from field refs
+	// Filter out functional field refs
 	const formFields = Object.fromEntries(
-		Object.entries(fields).filter(x => x[0] !== 'get')
+		Object.entries(fields).filter(x => !['get', 'set'].includes(x[0]))
 	);
 	const inputDisplay = Object.entries(formFields).map(([key, field]) => {
 		const { label, maxLength, onChange, ref, sectionClass, type } = field;

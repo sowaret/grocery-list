@@ -5,7 +5,7 @@ import { setJoinError } from '../../features/sheetSlice';
 import { wsCreateSheet, wsJoinSheet } from '../../webSocketModule';
 import InputModal from './InputModal';
 import { generateFieldRefs } from './utils/InputModal';
-import './styles/JoinSheetModal';
+import './styles/JoinSheetModal.css';
 
 const JoinSheetModal = () => {
 	const dispatch = useDispatch();

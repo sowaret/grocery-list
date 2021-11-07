@@ -1,11 +1,20 @@
 const fs = require('fs');
-const envItems = ['AUTH_STRING', 'TOKEN', 'TOKEN_EXPIRES_AT'];
 
 module.exports = updateEnvFile = newValues => {
+	// Update environment
 	for (const key in newValues) process.env[key] = newValues[key];
-
-	const envContents = envItems
-		.map(item => `${item}=${process.env[item]}`)
+	// Update .env file
+	const envContents = fs
+		.readFileSync('.env')
+		.toString()
+		.split('\n')
+		.map(line => line.split(/=(.+)/)) // Split at first equal sign
+		.map(([key, value]) =>
+			value // Update/retain key-value lines
+				? `${key}=${key in newValues ? newValues[key] : value}`
+				: // Retain non-key-value lines
+				  key
+		)
 		.join('\n');
 
 	fs.writeFileSync('.env', envContents);

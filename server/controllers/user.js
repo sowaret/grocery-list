@@ -31,7 +31,12 @@ const createUser = async ({ confirmPassword, password, username }) => {
 				password,
 				salter.generateSalt()
 			);
-			const newUser = new User({ password_hash, salt, username });
+			const newUser = new User({
+				customColour: '#FDO',
+				password_hash,
+				salt,
+				username,
+			});
 			await newUser.save().catch(err => {
 				throw 'CREATE_USER';
 			});

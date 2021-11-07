@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useClasses from '../../hooks/useClasses';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { wsRenameList } from '../../webSocketModule';
 
 const ListName = ({ listId, name }) => {
-	const [didMount, setDidMount] = useState(false);
 	const [isEditingName, setIsEditingName] = useState(false);
 	const [newName, setNewName] = useState(name);
 
@@ -37,15 +37,10 @@ const ListName = ({ listId, name }) => {
 		if (e.key === 'Enter') saveNameEdit();
 	};
 
-	// On mount
-	useEffect(() => {
-		setDidMount(true);
-	}, []);
-
-	// Rename list
-	useEffect(() => {
-		if (didMount) dispatch(wsRenameList({ listId, newName }));
-	}, [newName]);
+	useUpdateEffect([
+		() => dispatch(wsRenameList({ listId, newName })),
+		[newName],
+	]);
 
 	return (
 		<div

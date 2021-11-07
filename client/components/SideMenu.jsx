@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentView } from '../features/appSlice';
 import useClasses from '../hooks/useClasses';
 import { animeTarget, getMenuDisplay } from './utils/SideMenu';
-import './styles/SideMenu';
+import './styles/SideMenu.css';
 
 const SideMenu = () => {
 	const [isAnimating, setIsAnimating] = useState(false);

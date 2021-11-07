@@ -23,7 +23,4 @@ export const sheetSlice = createSlice({
 	reducers: sheetReducers,
 });
 
-module.exports = {
-	...sheetSlice.actions,
-	default: sheetSlice.reducer,
-};
+module.exports = Object.assign(sheetSlice.reducer, sheetSlice.actions);

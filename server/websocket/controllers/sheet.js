@@ -1,4 +1,4 @@
-const { changeSheetPassword } = require('../../controllers/sheet');
+const { changeSheet } = require('../../controllers/sheet');
 const { send } = require('../../functions');
 const { formatAndHandleError, handleError } = require('./utils/errorHandling');
 
@@ -19,7 +19,7 @@ const populateSheet = ({ client, password, wsSheet }) => {
 module.exports = {
 	CHANGE_SHEET_PASSWORD: {
 		try: async ({ client, data }) => {
-			await changeSheetPassword({ ...data, sheetId: client.sheet.id });
+			await changeSheet.password({ ...data, sheetId: client.sheet.id });
 			send(client, { type: 'CHANGED_SHEET_PASSWORD' });
 		},
 		catch: ({ client, error }) =>

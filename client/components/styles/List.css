@@ -21,6 +21,7 @@
 		cursor: pointer;
 		font-size: 14px;
 		padding: 7px;
+		position: relative;
 	}
 	.list-name.editing
 	{

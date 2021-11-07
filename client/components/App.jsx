@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddItemModal from './modals/AddItemModal';
 import JoinSheetModal from './modals/JoinSheetModal';
 import SheetDetailsModal from './modals/SheetDetailsModal';
+import SheetWelcomeModal from './modals/SheetWelcome';
 import StoreSearchModal from './modals/StoreSearchModal';
 import UserModal from './modals/UserModal';
 import Sheet from './Sheet';
@@ -14,7 +15,8 @@ import { wsConnect } from '../webSocketModule';
 
 const App = () => {
 	const { currentPOST, currentView } = useSelector(state => state.app);
-	const { isSorting, showClaimColumn } = useSelector(state => state.sheet);
+	const isSorting = useSelector(state => state.sheet.isSorting);
+	const showClaimColumn = useSelector(state => state.sheet.showClaimColumn);
 
 	const classes = useClasses(
 		'App',
@@ -28,7 +30,14 @@ const App = () => {
 
 	// On mount, establish websocket connection
 	useEffect(() => {
-		dispatch(wsConnect('ws://localhost:8080'));
+		dispatch(
+			wsConnect(
+				location.protocol.replace(/^http/, 'ws') +
+					location.hostname +
+					':' +
+					process.env.WS_SERVER_PORT
+			)
+		);
 	}, []);
 
 	return (
@@ -36,6 +45,7 @@ const App = () => {
 			<SideMenu />
 			<Sheet appRoot={rootRef} />
 			<UserModal />
+			<SheetWelcomeModal />
 			<JoinSheetModal />
 			<SheetDetailsModal />
 			<StoreSearchModal />

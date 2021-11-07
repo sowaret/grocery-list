@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentView } from '../../features/appSlice';
 import { setChecklistListId } from '../../features/sheetSlice';
 import UserChecklist from './UserChecklist';
-import './styles/Checklist';
+import './styles/Checklist.css';
 
 const getOrderedItemList = ({ storeProducts, items }) => {
 	if (!items) return [];

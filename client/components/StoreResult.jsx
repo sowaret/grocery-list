@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/StoreResult';
+import './styles/StoreResult.css';
 
 const StoreResult = ({ data, onClick }) => {
 	const store = data;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ChecklistItem from './ChecklistItem';
-import './styles/UserChecklist';
+import './styles/UserChecklist.css';
 
 const UserChecklist = ({ user, items }) => {
 	const title = user?.username || 'Unclaimed items';

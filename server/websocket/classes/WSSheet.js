@@ -4,16 +4,11 @@ const {
 	getListsBySheet,
 	renameList,
 } = require('../../controllers/list');
-const {
-	addItemToList,
-	updateListItemChecked,
-	updateListItemClaimedBy,
-	updateListItemQuantity,
-} = require('../../controllers/listItem');
+const { addItemToList, updateListItem } = require('../../controllers/listItem');
 const {
 	addNewUserToSheet,
-	changeSheetStore,
-	getSheetById,
+	changeSheet,
+	getSheet,
 	updateSheetStoreProductSort,
 } = require('../../controllers/sheet');
 
@@ -76,7 +71,7 @@ class WSSheet {
 
 	// Helper methods
 	async enrichWithSheetDetails() {
-		const { data, sheet } = await getSheetById(this.id, [
+		const { data, sheet } = await getSheet.byId(this.id, [
 			'store',
 			'store_products',
 			'users',
@@ -123,7 +118,7 @@ class WSSheet {
 	}
 
 	async changeStore(storeDetails) {
-		const store = await changeSheetStore(storeDetails);
+		const store = await changeSheet.store(storeDetails);
 		this.store = store;
 		return store;
 	}
@@ -143,13 +138,13 @@ class WSSheet {
 	}
 
 	async updateItemChecked({ checked, itemId, listId }) {
-		const updateData = await updateListItemChecked({ checked, itemId });
+		const updateData = await updateListItem.checked({ checked, itemId });
 		if (updateData) this.lists[listId].items[itemId].checked = checked;
 		return updateData;
 	}
 
 	async updateItemClaimedBy({ itemId, listId, claimedByUserDocument }) {
-		const updateData = await updateListItemClaimedBy(
+		const updateData = await updateListItem.claimedBy(
 			itemId,
 			claimedByUserDocument
 		);
@@ -158,7 +153,7 @@ class WSSheet {
 	}
 
 	async updateItemQuantity({ itemId, listId, quantity }) {
-		await updateListItemQuantity(itemId, quantity);
+		await updateListItem.quantity(itemId, quantity);
 		this.lists[listId].items[itemId].quantity = quantity;
 	}
 

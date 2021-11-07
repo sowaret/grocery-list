@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { createSheet, getSheetByCode } = require('../../controllers/sheet');
+const { createSheet, getSheet } = require('../../controllers/sheet');
 const { send } = require('../../functions');
 const { hash } = require('../../utils/salter');
 const WSSheet = require('./WSSheet');
@@ -55,7 +55,7 @@ class WSApp {
 	}
 
 	async validateSheetJoin({ client, password, sheetCode }) {
-		const { sheet } = await getSheetByCode(sheetCode);
+		const { sheet } = await getSheet.byCode(sheetCode);
 		const { passwordHash } = hash(password, '');
 		if (passwordHash !== sheet.password) throw 'SHEET_PASSWORD_INCORRECT';
 

@@ -1,3 +1,4 @@
+import { setCurrentPOST, setCurrentView } from '../../features/appSlice';
 import {
 	disconnectUser,
 	joinUser,
@@ -26,6 +27,11 @@ const actions = {
 };
 
 const otherReducers = {
+	CHANGED_SHEET_PASSWORD: ({ dispatch }) => {
+		// Triggers SheetDetailsModal useEffect to reset fields
+		dispatch(setCurrentPOST());
+		dispatch(setCurrentView('sheet-details-password-success'));
+	},
 	POPULATE_SHEET: ({ dispatch, payload }) => dispatch(setSheet(payload)),
 	USER_JOINED: ({ dispatch, payload }) => dispatch(joinUser(payload.user)),
 	USER_LEFT: ({ dispatch, payload }) => dispatch(disconnectUser(payload)),

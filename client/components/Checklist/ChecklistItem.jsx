@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import useClasses from '../../hooks/useClasses';
 import { wsUpdateItemChecked } from '../../webSocketModule';
-import './styles/ChecklistItem';
+import './styles/ChecklistItem.css';
 
 const ChecklistItem = ({ aisle, checked, itemId, listId, name, price }) => {
 	const classes = useClasses('checklist-item', checked && 'checked');

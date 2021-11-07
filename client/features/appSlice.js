@@ -11,7 +11,7 @@ export const appSlice = createSlice({
 			state.currentPOST = action.payload || null;
 		},
 		setCurrentView: (state, action) => {
-			state.currentView = action.payload;
+			state.currentView = action.payload || null;
 		},
 	},
 });

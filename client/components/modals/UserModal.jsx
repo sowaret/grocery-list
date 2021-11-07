@@ -8,7 +8,7 @@ import {
 	generateConfirmPasswordValidation,
 	generateFieldRefs,
 } from './utils/InputModal';
-import './styles/UserModal';
+import './styles/UserModal.css';
 
 const UserModal = () => {
 	// UserModal-specific

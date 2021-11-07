@@ -1,6 +1,6 @@
 import React from 'react';
 import useClasses from '../hooks/useClasses';
-import './styles/List';
+import './styles/List.css';
 
 const BaseList = ({ className, itemsDisplay, children }) => (
 	<div className={useClasses('BaseList', className)}>

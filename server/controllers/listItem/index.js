@@ -1,10 +1,11 @@
-const { List, ListItem, StoreProduct } = require('../models');
-const { getListById } = require('./list');
-const { getOrCreateProduct } = require('./product');
+const { List, ListItem, StoreProduct } = require('../../models');
+const { getListById } = require('../list');
+const { getOrCreateProduct } = require('../product');
 const {
 	addStoreProductToSheet,
 	getOrCreateStoreProduct,
-} = require('./storeProduct');
+} = require('../storeProduct');
+const updateListItem = require('./update');
 
 const addItemToList = async ({ item, listId }) => {
 	const populateSheetFields = ['store', 'store_products'];
@@ -29,14 +30,6 @@ const addItemToList = async ({ item, listId }) => {
 	);
 
 	return { listItemResponse, storeProduct, storeProductExists };
-};
-
-const getListItemById = async _id => {
-	const listItem = await ListItem.findOne({ _id }).catch(err => {
-		throw 'FIND_LIST_ITEM';
-	});
-	if (listItem) return listItem;
-	throw 'LIST_ITEM_NOT_FOUND';
 };
 
 const getOrCreateListItem = async (list, storeProduct, _options) => {
@@ -79,57 +72,8 @@ const getOrCreateListItem = async (list, storeProduct, _options) => {
 	return { listItem: newListItem };
 }; // getOrCreateListItem
 
-const updateListItemField = async (listItem, fieldName, value, enumIfError) => {
-	listItem[fieldName] = value;
-	await listItem.save().catch(err => {
-		throw enumIfError;
-	});
-	return { updated: true };
-}; // updateListItemField
-
-const updateListItemChecked = async ({ checked, itemId }) => {
-	const listItem = await getListItemById(itemId);
-	if (listItem.checked === checked) return;
-
-	await updateListItemField(
-		listItem,
-		'checked',
-		checked,
-		'UPDATE_LIST_ITEM_CHECKED'
-	);
-	return { updated: true };
-};
-
-const updateListItemClaimedBy = async (listItemId, claimedByUserDocument) => {
-	const listItem = await getListItemById(listItemId);
-	if (listItem.claimedBy === claimedByUserDocument) return;
-
-	await updateListItemField(
-		listItem,
-		'claimedBy',
-		claimedByUserDocument,
-		'UPDATE_LIST_ITEM_CLAIMED_BY'
-	);
-
-	return { id: claimedByUserDocument ? claimedByUserDocument.id : null };
-}; // updateListItemClaimedBy
-
-const updateListItemQuantity = async (listItemId, quantity) => {
-	const listItem = await getListItemById(listItemId);
-	if (quantity === listItem.quantity) return;
-
-	return await updateListItemField(
-		listItem,
-		'quantity',
-		quantity,
-		'UPDATE_LIST_ITEM_QUANTITY'
-	);
-}; // updateListItemQuantity
-
 module.exports = {
 	addItemToList,
 	getOrCreateListItem,
-	updateListItemChecked,
-	updateListItemClaimedBy,
-	updateListItemQuantity,
+	updateListItem,
 };

@@ -1,15 +1,14 @@
 import React from 'react';
+import { KROGER_IMAGE_URL_BASE } from '../enums';
 import useClasses from '../hooks/useClasses';
 import { formatPrice } from '../js/functions';
 import { calculatePerSize } from '../js/productUnitConversion';
-import './styles/ItemResult';
-
-const imageUrlBase = 'https://www.kroger.com/product/images/small/front/';
+import './styles/ItemResult.css';
 
 const ItemResult = ({ data, onClick }) => {
 	const item = data;
 	const { name, size } = item;
-	const imageUrl = `${imageUrlBase}${item.upc}`;
+	const imageUrl = `${KROGER_IMAGE_URL_BASE}${item.upc}`;
 	const { regular: price, promo: salePrice } = item.price;
 	const activePrice = salePrice || price;
 	const perSize = calculatePerSize(size, price, activePrice);

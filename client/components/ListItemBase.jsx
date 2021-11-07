@@ -1,6 +1,6 @@
 import React from 'react';
 import useClasses from '../hooks/useClasses';
-import './styles/ListItems';
+import './styles/ListItems.css';
 
 const ListItemBase = ({
 	className,

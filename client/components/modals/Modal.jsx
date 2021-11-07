@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setCurrentView } from '../../features/appSlice';
 import useClasses from '../../hooks/useClasses';
 import { fadeInModal, fadeOutModal } from '../utils/Modals';
-import './styles/Modals';
+import './styles/Modals.css';
 
 const Modal = ({
 	iconName,

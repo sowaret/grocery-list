@@ -37,6 +37,9 @@ export const generateFieldRefs = _fields => {
 			const mutator = refValueMutators[key];
 			return (mutator && mutator(value)) || value;
 		},
+		set: (key, value) => {
+			refData[key].ref.current.value = value;
+		},
 	};
 	Object.entries(fields).map(([key, options]) => {
 		const { label, ...rest } = options;

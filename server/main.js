@@ -1,12 +1,11 @@
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-const { API_PORT, DB_ROUTE } = require('./config');
 const routes = require('./routes');
 const createWebSocketServer = require('./websocket/webSocketServer');
 
 mongoose
-	.connect(DB_ROUTE, {
+	.connect(process.env.DB_ROUTE, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
@@ -16,8 +15,10 @@ mongoose
 			.use(express.json())
 			.use('/api/v1', routes);
 
-		app.listen(API_PORT, () =>
-			console.log(`\nConnection successful, listening on port ${API_PORT}.`)
+		app.listen(process.env.API_PORT, () =>
+			console.log(
+				`\nConnection successful, listening on port ${process.env.API_PORT}.`
+			)
 		);
 	})
 	.catch(err => console.log('Could not connect to database:', err.toString()));
